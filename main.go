@@ -16,7 +16,6 @@ import (
 const uri = "mongodb://localhost:27017"
 
 func main() {
-	property := models.Property{Price: 1200, Location: "Dublin", URL: "https://bullshit.com/adfsjkl/12345", ID: 1234567}
 	// Create a new client and connect to the server
 	credential := options.Credential{
 		Username: "root",
@@ -29,11 +28,19 @@ func main() {
 	}
 	fmt.Println("Successfully connected and pinged.")
 	coll := client.Database("daft-stats").Collection("properties")
-	_, err = coll.InsertOne(context.TODO(), property)
 
 	property_links := scrape_properties()
 
-	fmt.Print(build_properties_from_links(property_links))
+	properties := build_properties_from_links(property_links)
+	var properties_interface []interface{}
+	for _, v := range properties {
+		properties_interface = append(properties_interface, v)
+	}
+	_, err = coll.InsertMany(context.TODO(), properties_interface)
+	if err != nil {
+
+		fmt.Print(err)
+	}
 
 }
 func build_properties_from_links(links []string) []models.Property {
@@ -71,16 +78,15 @@ func build_properties_from_links(links []string) []models.Property {
 		location = h.Text
 	})
 
-	c.OnHTML("p [data-testid=beds]", func(h *colly.HTMLElement) {
+	c.OnHTML("p[data-testid=beds]", func(h *colly.HTMLElement) {
 		beds_temp, err := strconv.Atoi(strings.Split(h.Text, " ")[0])
-		fmt.Print(h.Text)
 		if err != nil {
 			fmt.Errorf("Error converting to in%s", err)
 		}
 		beds = beds_temp
 	})
 
-	c.OnHTML("p [data-testid=baths]", func(h *colly.HTMLElement) {
+	c.OnHTML("p[data-testid=baths]", func(h *colly.HTMLElement) {
 		baths_temp, err := strconv.Atoi(strings.Split(h.Text, " ")[0])
 		if err != nil {
 			fmt.Errorf("Error converting to in%s", err)
@@ -88,10 +94,10 @@ func build_properties_from_links(links []string) []models.Property {
 		baths = baths_temp
 	})
 
-	c.OnHTML("p [data-testid=property-type]", func(h *colly.HTMLElement) {
+	c.OnHTML("p[data-testid=property-type]", func(h *colly.HTMLElement) {
 		type_ = strings.Split(h.Text, " ")[0]
 	})
-	c.OnHTML("div [data-testid=statistics]", func(h *colly.HTMLElement) {
+	c.OnHTML("div[data-testid=statistics]", func(h *colly.HTMLElement) {
 		stats := h.ChildText("p")
 		stats_split := strings.Split(stats, "Entered/Renewed")
 		views_split := strings.Split(stats_split[1], "Property Views")
@@ -133,7 +139,7 @@ func build_properties_from_links(links []string) []models.Property {
 }
 
 func scrape_properties() []string {
-	from_value := 40
+	from_value := 0
 	c := colly.NewCollector()
 	// On every a element which has href attribute call callback
 	links := []string{}
@@ -153,7 +159,7 @@ func scrape_properties() []string {
 	})
 
 	// Start scraping on https://hackerspaces.org
-	for i := from_value; i < 80; i += 20 {
+	for i := from_value; i < 1000; i += 20 {
 		page_to_visit := fmt.Sprintf("https://www.daft.ie/property-for-rent/ireland?pageSize=20&from=%d", i)
 		c.Visit(page_to_visit)
 	}
