@@ -73,6 +73,7 @@ func build_properties_from_links(links []string) []models.Property {
 
 	c.OnHTML("p [data-testid=beds]", func(h *colly.HTMLElement) {
 		beds_temp, err := strconv.Atoi(strings.Split(h.Text, " ")[0])
+		fmt.Print(h.Text)
 		if err != nil {
 			fmt.Errorf("Error converting to in%s", err)
 		}
@@ -92,8 +93,9 @@ func build_properties_from_links(links []string) []models.Property {
 	})
 	c.OnHTML("div [data-testid=statistics]", func(h *colly.HTMLElement) {
 		stats := h.ChildText("p")
-		stats_split := strings.Split(stats, " ")
-		views_temp, err := strconv.Atoi(strings.Replace(stats_split[2], ",", "", -1))
+		stats_split := strings.Split(stats, "Entered/Renewed")
+		views_split := strings.Split(stats_split[1], "Property Views")
+		views_temp, err := strconv.Atoi(strings.Replace(views_split[0], ",", "", -1))
 		if err != nil {
 			fmt.Errorf("Error converting to int%s", err)
 		}
@@ -131,7 +133,7 @@ func build_properties_from_links(links []string) []models.Property {
 }
 
 func scrape_properties() []string {
-	from_value := 0
+	from_value := 40
 	c := colly.NewCollector()
 	// On every a element which has href attribute call callback
 	links := []string{}
@@ -151,7 +153,7 @@ func scrape_properties() []string {
 	})
 
 	// Start scraping on https://hackerspaces.org
-	for i := from_value; i < 40; i += 20 {
+	for i := from_value; i < 80; i += 20 {
 		page_to_visit := fmt.Sprintf("https://www.daft.ie/property-for-rent/ireland?pageSize=20&from=%d", i)
 		c.Visit(page_to_visit)
 	}
