@@ -126,7 +126,7 @@ func build_properties_from_links(links []string) []models.Property {
 		property.Price = price
 		property.URL = url
 		property.Location = location
-		property.ID = id
+		property.DaftId = id
 		property.Bed = beds
 		property.Bathroom = baths
 		property.Type = type_

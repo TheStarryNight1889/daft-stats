@@ -2,27 +2,19 @@
 #
 # https://gqlgen.com/getting-started/
 
-type Todo {
+type Property {
   id: ID!
-  text: String!
-  done: Boolean!
-  user: User!
+  price: Int!
+  location: String!
+  url: String!
+  daftId: Int!
+  entered: String!
+  views: Int!
+  type: String!
+  bathroom: Int!
+  bed: Int!
 }
-
-type User {
-  id: ID!
-  name: String!
-}
-
 type Query {
-  todos: [Todo!]!
-}
-
-input NewTodo {
-  text: String!
-  userId: String!
-}
-
-type Mutation {
-  createTodo(input: NewTodo!): Todo!
+  property(_id: String!): Property!
+  properties: [Property!]!
 }
