@@ -1,10 +1,10 @@
 <template>
-  <router-view/>
+    <h1>HomeComponent</h1>
 </template>
 
 <script>
-
 export default {
-  name: 'App',
+  name: 'HomeDashboard',
+
 };
 </script>
