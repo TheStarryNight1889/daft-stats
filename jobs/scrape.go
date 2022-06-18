@@ -1,33 +1,25 @@
-package jobs
+package main
 
 import (
 	"context"
+	"daft-stats/db"
 	"daft-stats/models"
 	"fmt"
 	"strconv"
 	"strings"
 
 	"github.com/gocolly/colly"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 // Connection URI
 const uri = "mongodb://localhost:27017"
 
+func main() {
+	Scrape()
+}
+
 func Scrape() {
-	// Create a new client and connect to the server
-	credential := options.Credential{
-		Username: "root",
-		Password: "example",
-	}
-	clientOpts := options.Client().ApplyURI(uri).SetAuth(credential)
-	client, err := mongo.Connect(context.TODO(), clientOpts)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println("Successfully connected and pinged.")
-	coll := client.Database("daft-stats").Collection("properties")
+	db := db.Connect()
 
 	property_links := scrape_properties()
 
@@ -36,7 +28,7 @@ func Scrape() {
 	for _, v := range properties {
 		properties_interface = append(properties_interface, v)
 	}
-	_, err = coll.InsertMany(context.TODO(), properties_interface)
+	_, err := db.Collection("properties").InsertMany(context.TODO(), properties_interface)
 	if err != nil {
 
 		fmt.Print(err)

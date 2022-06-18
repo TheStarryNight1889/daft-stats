@@ -110,7 +110,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Property.Entered(childComplexity), true
 
-	case "Property.id":
+	case "Property._id":
 		if e.complexity.Property.ID == nil {
 			break
 		}
@@ -228,7 +228,7 @@ var sources = []*ast.Source{
 # https://gqlgen.com/getting-started/
 
 type Property {
-  id: ID!
+  _id: ID!
   price: Int!
   location: String!
   url: String!
@@ -319,8 +319,8 @@ func (ec *executionContext) field___Type_fields_args(ctx context.Context, rawArg
 
 // region    **************************** field.gotpl *****************************
 
-func (ec *executionContext) _Property_id(ctx context.Context, field graphql.CollectedField, obj *model.Property) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Property_id(ctx, field)
+func (ec *executionContext) _Property__id(ctx context.Context, field graphql.CollectedField, obj *model.Property) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Property__id(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -350,7 +350,7 @@ func (ec *executionContext) _Property_id(ctx context.Context, field graphql.Coll
 	return ec.marshalNID2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Property_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Property__id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Property",
 		Field:      field,
@@ -798,8 +798,8 @@ func (ec *executionContext) fieldContext_Query_property(ctx context.Context, fie
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
-			case "id":
-				return ec.fieldContext_Property_id(ctx, field)
+			case "_id":
+				return ec.fieldContext_Property__id(ctx, field)
 			case "price":
 				return ec.fieldContext_Property_price(ctx, field)
 			case "location":
@@ -875,8 +875,8 @@ func (ec *executionContext) fieldContext_Query_properties(ctx context.Context, f
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
-			case "id":
-				return ec.fieldContext_Property_id(ctx, field)
+			case "_id":
+				return ec.fieldContext_Property__id(ctx, field)
 			case "price":
 				return ec.fieldContext_Property_price(ctx, field)
 			case "location":
@@ -2822,9 +2822,9 @@ func (ec *executionContext) _Property(ctx context.Context, sel ast.SelectionSet,
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Property")
-		case "id":
+		case "_id":
 
-			out.Values[i] = ec._Property_id(ctx, field, obj)
+			out.Values[i] = ec._Property__id(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				invalids++

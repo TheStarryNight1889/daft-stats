@@ -3,7 +3,7 @@
 package model
 
 type Property struct {
-	ID       string `json:"id"`
+	ID       string `json:"_id"`
 	Price    int    `json:"price"`
 	Location string `json:"location"`
 	URL      string `json:"url"`

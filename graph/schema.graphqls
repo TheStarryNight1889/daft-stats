@@ -3,7 +3,7 @@
 # https://gqlgen.com/getting-started/
 
 type Property {
-  id: ID!
+  _id: ID!
   price: Int!
   location: String!
   url: String!
