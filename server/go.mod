@@ -10,6 +10,11 @@ require (
 )
 
 require (
+	github.com/go-chi/chi v1.5.4 // indirect
+	github.com/rs/cors v1.8.2 // indirect
+)
+
+require (
 	github.com/PuerkitoBio/goquery v1.8.0 // indirect
 	github.com/agnivade/levenshtein v1.1.1 // indirect
 	github.com/andybalholm/cascadia v1.3.1 // indirect
