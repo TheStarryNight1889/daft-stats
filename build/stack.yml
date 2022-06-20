@@ -10,5 +10,19 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
-  
-  
+      
+  server:
+    expose:
+      - 3000
+    build:
+      context: ../server/
+    environment:
+      PORT: 3000
+
+  client:
+    expose:
+      - 8080
+    ports:
+      - "80:8080"
+    build:
+      context: ../client/

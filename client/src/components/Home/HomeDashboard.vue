@@ -1,6 +1,8 @@
 <template>
     <h1>HomeComponent</h1>
-    {{propertiesStore.averagePrice}}
+    {{propertiesStore.averagePrice}} <br/>
+    {{propertiesStore.lowestPrice}} <br/>
+    {{propertiesStore.highestPrice}}
 </template>
 
 <script>
