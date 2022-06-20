@@ -24,6 +24,7 @@ const useProperties = defineStore('properties', {
   actions: {
     async FetchAllProperties() {
       const { data } = await api.GetAllProperties();
+      console.log(data);
       this.properties = data.properties;
     },
   },

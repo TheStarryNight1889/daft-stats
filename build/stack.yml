@@ -1,28 +1,47 @@
 version: '3.1'
 
 services:
-
   mongo:
     image: mongo
     restart: always
-    ports: 
-      - "27017:27017"
+    hostname: mongo
+    expose:
+      - 27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
-      
+    networks:
+      - daft-stats
+
   server:
+    hostname: server
+    ports:
+      - "3000:3000"
     expose:
       - 3000
     build:
       context: ../server/
     environment:
       PORT: 3000
+      DB_HOST: mongo
+      DB_PORT: 27017
+    networks:
+      - daft-stats
 
   client:
+    hostname: client
     expose:
       - 8080
     ports:
       - "80:8080"
+    environment:
+      SERVER_HOST: server
+      SERVER_PORT: 3000
     build:
       context: ../client/
+    networks:
+      - daft-stats
+
+networks:
+  daft-stats:
+    driver: bridge
