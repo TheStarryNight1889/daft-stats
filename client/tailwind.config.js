@@ -7,5 +7,9 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [],
+  daisyui: {
+    themes: ['winter'],
+  },
+  // eslint-disable-next-line global-require
+  plugins: [require('daisyui')],
 };

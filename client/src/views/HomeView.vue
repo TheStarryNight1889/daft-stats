@@ -1,5 +1,7 @@
 <template>
-    <h1>HomeView</h1>
+    <div class="navbar bg-base-100">
+      <a class="btn btn-ghost normal-case text-xl">DaftStats</a>
+    </div>
     <HomeDashboard/>
 </template>
 
