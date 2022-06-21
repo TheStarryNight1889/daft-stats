@@ -5,6 +5,8 @@ services:
     image: mongo
     restart: always
     hostname: mongo
+    ports:
+      - "27017:27017"
     expose:
       - 27017
     environment:
