@@ -1,17 +1,17 @@
 <template>
   <div>
     <div class="navbar bg-base-100">
-        <a class="btn btn-ghost normal-case text-xl">DaftStats</a>
+      <a class="btn btn-ghost normal-case text-xl">DaftStats</a>
     </div>
-    <HomeDashboard/>
+    <HomeDashboard />
   </div>
 </template>
 
 <script>
-import HomeDashboard from '../components/Home/HomeDashboard.vue';
+import HomeDashboard from "../components/Home/HomeDashboard.vue";
 
 export default {
-  name: 'HomeView',
+  name: "HomeView",
   components: {
     HomeDashboard,
   },
