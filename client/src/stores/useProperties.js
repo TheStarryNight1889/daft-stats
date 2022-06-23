@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import api from '@/api';
+import api from '../api';
 
 const useProperties = defineStore('properties', {
   state: () => ({

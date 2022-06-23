@@ -1,7 +1,7 @@
 import * as VueRouter from 'vue-router';
 // 1. Define route components.
 // These can be imported from other files
-const HomeView = () => import('@/views/HomeView.vue');
+const HomeView = () => import('../views/HomeView.vue');
 
 // 2. Define some routes
 // Each route should map to a component.
