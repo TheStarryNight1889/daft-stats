@@ -11,8 +11,10 @@ const propertiesQuery = `
     }
 `;
 
-const GetAllProperties = async () => axios.post('', { query: propertiesQuery })
-  .then((response) => response.data).catch((error) => {
+const GetAllProperties = async () => axios
+  .post('', { query: propertiesQuery })
+  .then((response) => response.data)
+  .catch((error) => {
     console.log(error);
   });
 

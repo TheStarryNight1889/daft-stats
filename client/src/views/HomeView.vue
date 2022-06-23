@@ -8,10 +8,10 @@
 </template>
 
 <script>
-import HomeDashboard from "../components/Home/HomeDashboard.vue";
+import HomeDashboard from '../components/Home/HomeDashboard.vue';
 
 export default {
-  name: "HomeView",
+  name: 'HomeView',
   components: {
     HomeDashboard,
   },
