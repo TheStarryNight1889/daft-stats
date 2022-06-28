@@ -54,6 +54,7 @@ func build_properties_from_links(links []string) []models.Property {
 	})
 
 	c.OnHTML("div[data-testid=price]", func(h *colly.HTMLElement) {
+		// TODO: handle gbp properly
 		if strings.Contains(h.Text, "€") && !strings.Contains(h.Text, "£") {
 			string_price := strings.Split(h.Text, " ")[0]
 			multiplier := 1
