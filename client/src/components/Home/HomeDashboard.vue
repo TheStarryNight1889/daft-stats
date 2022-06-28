@@ -15,7 +15,9 @@
         <p class="text-accent text-xs">
           3.5% lower than last month
         </p>
-        <p>{{ propertiesStore.averagePrice }} per dwelling</p>
+        <p>
+          €{{ averagePrice }}  per dwelling
+        </p>
       </div>
       <div class="my-2">
         <h1 class="text-xl">
@@ -28,11 +30,13 @@
         <p class="text-accent text-xs">
           15% higher than last month
         </p>
-        <p>{{ propertiesStore.lowestPrice }}</p>
+        <p>
+          €{{ lowestPrice }}
+        </p>
       </div>
     </div>
     <div class="py-2 px-2 m-2 bg-base-300 rounded">
-      <PriceDistributionChart :price-distribution="propertiesStore.priceDistributionIn500s" />
+      <PriceDistributionChart :price-distribution="priceDistribution" />
     </div>
   </div>
 </template>
@@ -50,6 +54,17 @@ export default {
     return {
       propertiesStore,
     };
+  },
+  computed: {
+    priceDistribution() {
+      return this.propertiesStore.priceDistributionIn500s;
+    },
+    averagePrice() {
+      return Math.round(this.propertiesStore.averagePrice);
+    },
+    lowestPrice() {
+      return this.propertiesStore.lowestPrice;
+    },
   },
 };
 </script>

@@ -10,6 +10,7 @@
 <script>
 
 export default {
+  // TODO this doesnt load properly
   name: 'PriceDistributionChart',
   props: {
     priceDistribution: {

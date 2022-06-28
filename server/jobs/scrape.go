@@ -58,11 +58,9 @@ func build_properties_from_links(links []string) []models.Property {
 		if strings.Contains(h.Text, "€") && !strings.Contains(h.Text, "£") {
 			string_price := strings.Split(h.Text, " ")[0]
 			multiplier := 1
-			// ternary if string contains a week store a 4, otherwise store a 1
 			if strings.Contains(h.Text, "week") {
 				multiplier = 4
 			}
-			// log "multiplier set to {multiplier} for {string_price}"
 			fmt.Println("multiplier set to", multiplier, "for", h.Text)
 			removed_euro := strings.Split(string_price, "€")[1]
 			clean_price := strings.Replace(removed_euro, ",", "", -1)
