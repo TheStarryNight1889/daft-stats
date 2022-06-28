@@ -54,7 +54,7 @@ func build_properties_from_links(links []string) []models.Property {
 	})
 
 	c.OnHTML("div[data-testid=price]", func(h *colly.HTMLElement) {
-		if strings.Contains(h.Text, "€") {
+		if strings.Contains(h.Text, "€") && !strings.Contains(h.Text, "£") {
 			string_price := strings.Split(h.Text, " ")[0]
 			multiplier := 1
 			// ternary if string contains a week store a 4, otherwise store a 1
