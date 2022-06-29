@@ -7,10 +7,19 @@ type Property struct {
 	Price    int    `json:"price"`
 	Location string `json:"location"`
 	URL      string `json:"url"`
-	DaftID   int    `json:"daftId"`
 	Entered  string `json:"entered"`
 	Views    int    `json:"views"`
 	Type     string `json:"type"`
+	DaftID   int    `json:"daft_id"`
 	Bathroom int    `json:"bathroom"`
 	Bed      int    `json:"bed"`
+}
+
+type Stat struct {
+	ID                string  `json:"_id"`
+	Timestamp         string  `json:"timestamp"`
+	PriceAverage      float64 `json:"price_average"`
+	PriceHigh         float64 `json:"price_high"`
+	PriceLow          float64 `json:"price_low"`
+	PriceDistribution []int   `json:"price_distribution"`
 }

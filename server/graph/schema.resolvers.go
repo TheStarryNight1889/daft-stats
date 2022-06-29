@@ -19,6 +19,10 @@ func (r *queryResolver) Properties(ctx context.Context) ([]*model.Property, erro
 	return services.FindProperties(DB)
 }
 
+func (r *queryResolver) Stats(ctx context.Context) ([]*model.Stat, error) {
+	return services.FindStats(DB)
+}
+
 // Query returns generated.QueryResolver implementation.
 func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 

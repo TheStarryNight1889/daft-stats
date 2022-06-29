@@ -1,9 +1,9 @@
-package main
+package jobs
 
 import (
 	"context"
 	"daft-stats/db"
-	"daft-stats/models"
+	"daft-stats/graph/model"
 	"fmt"
 	"strconv"
 	"strings"
@@ -14,16 +14,14 @@ import (
 // Connection URI
 const uri = "mongodb://localhost:27017"
 
-func main() {
-	Scrape()
+func GetProperties() {
+	properties := scrape()
+	save(properties)
+	GenerateStats(properties)
 }
 
-func Scrape() {
+func save(properties []model.Property) {
 	db := db.Connect()
-
-	property_links := scrape_properties()
-
-	properties := build_properties_from_links(property_links)
 	var properties_interface []interface{}
 	for _, v := range properties {
 		properties_interface = append(properties_interface, v)
@@ -35,8 +33,15 @@ func Scrape() {
 	}
 }
 
-func build_properties_from_links(links []string) []models.Property {
-	properties := []models.Property{}
+func scrape() []model.Property {
+	property_links := scrape_properties()
+	properties := build_properties_from_links(property_links)
+
+	return properties
+}
+
+func build_properties_from_links(links []string) []model.Property {
+	properties := []model.Property{}
 	var price int
 	var url string
 	var location string
@@ -120,11 +125,11 @@ func build_properties_from_links(links []string) []models.Property {
 		}
 		id = temp_id
 
-		property := models.Property{}
+		property := model.Property{}
 		property.Price = price
 		property.URL = url
 		property.Location = location
-		property.DaftId = id
+		property.DaftID = id
 		property.Bed = beds
 		property.Bathroom = baths
 		property.Type = type_
@@ -137,7 +142,7 @@ func build_properties_from_links(links []string) []models.Property {
 }
 
 func scrape_properties() []string {
-	from_value := 0
+	from_value := 700
 	c := colly.NewCollector()
 	// On every a element which has href attribute call callback
 	links := []string{}

@@ -7,14 +7,24 @@ type Property {
   price: Int!
   location: String!
   url: String!
-  daftId: Int!
   entered: String!
   views: Int!
   type: String!
+  daft_id: Int!
   bathroom: Int!
   bed: Int!
+}
+type Stat {
+  _id: ID!
+  timestamp: String!
+  price_average: Float!
+  price_high: Float!
+  price_low: Float!
+  price_distribution: [Int!]!
 }
 type Query {
   property(_id: String!): Property!
   properties: [Property!]!
+
+  stats: [Stat!]!
 }
