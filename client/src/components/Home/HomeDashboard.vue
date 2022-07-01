@@ -15,6 +15,7 @@
         <p class="text-accent text-xs">
           3.5% lower than last month
         </p>
+
         <p>
           €{{ averagePrice }}  per dwelling
         </p>
