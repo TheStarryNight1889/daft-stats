@@ -10,6 +10,17 @@ const propertiesQuery = `
         }
     }
 `;
+const statsQuery = `
+    query {
+        stats {
+          timestamp
+          price_average
+          price_high
+          price_low
+          price_distribution
+        }
+    }
+`;
 
 const GetAllProperties = async () => axios
   .post('', { query: propertiesQuery })
@@ -17,7 +28,14 @@ const GetAllProperties = async () => axios
   .catch((error) => {
     console.log(error);
   });
+const GetAllStats = async () => axios
+  .post('', { query: statsQuery })
+  .then((response) => response.data)
+  .catch((error) => {
+    console.log(error);
+  });
 
 export default {
   GetAllProperties,
+  GetAllStats,
 };

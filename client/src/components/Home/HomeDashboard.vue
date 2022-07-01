@@ -42,28 +42,28 @@
 </template>
 
 <script>
-import useProperties from '../../stores/useProperties';
+import useStats from '../../stores/useStats';
 import PriceDistributionChart from './PriceDistributionChart.vue';
 
 export default {
   name: 'HomeDashboard',
   components: { PriceDistributionChart },
-  setup() {
-    const propertiesStore = useProperties();
-    propertiesStore.FetchAllProperties();
+  async setup() {
+    const statsStore = useStats();
+    await statsStore.FetchAllStats();
     return {
-      propertiesStore,
+      statsStore,
     };
   },
   computed: {
     priceDistribution() {
-      return this.propertiesStore.priceDistributionIn500s;
+      return this.statsStore.priceDistributionCurrent;
     },
     averagePrice() {
-      return Math.round(this.propertiesStore.averagePrice);
+      return Math.round(this.statsStore.priceAverageCurrent);
     },
     lowestPrice() {
-      return this.propertiesStore.lowestPrice;
+      return this.statsStore.priceLowCurrent;
     },
   },
 };
