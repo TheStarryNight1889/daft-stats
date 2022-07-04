@@ -8,6 +8,23 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
+func InsertProperty(db *mongo.Database, property model.Property) error {
+	_, err := db.Collection("properties").InsertOne(context.TODO(), property)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func UpdateProperty(db *mongo.Database, property model.Property) error {
+	collection := db.Collection("properties")
+	_, err := collection.UpdateOne(context.TODO(), bson.D{{"_id", property.ID}}, property)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func FindProperties(db *mongo.Database) ([]*model.Property, error) {
 	var properties []*model.Property
 	collection := db.Collection("properties")

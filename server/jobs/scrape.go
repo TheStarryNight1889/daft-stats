@@ -4,6 +4,7 @@ import (
 	"context"
 	"daft-stats/db"
 	"daft-stats/graph/model"
+	"daft-stats/services"
 	"fmt"
 	"strconv"
 	"strings"
@@ -23,6 +24,31 @@ func GetProperties() {
 func save(properties []model.Property) {
 	db := db.Connect()
 	var properties_interface []interface{}
+	// only save properties that do not already exist by daft id
+	// if any of the fields have changed, update the existing record
+	// if a property that did exist, does not exist anymore, update the removed field to todays timestamp
+	for _, p := range properties {
+		if p.DaftID != 0 {
+			// check if property exists
+			property, err := services.FindProperty(db, strconv.Itoa(p.DaftID))
+			if err != nil {
+				// property does not exist, create it
+				err = services.InsertProperty(db, p)
+				if err != nil {
+					fmt.Println(err)
+				}
+			} else {
+				if p.Price != property.Price || p.Location != property.Location || p.URL != property.URL || p.Entered != property.Entered || p.Views != property.Views || p.Type != property.Type || p.Bathroom != property.Bathroom || p.Bed != property.Bed {
+					// fields have changed, update the existing record
+					err = services.UpdateProperty(db, p)
+					if err != nil {
+						fmt.Println(err)
+					}
+				}
+			}
+		}
+	}
+
 	for _, v := range properties {
 		properties_interface = append(properties_interface, v)
 	}
