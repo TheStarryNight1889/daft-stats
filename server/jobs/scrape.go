@@ -171,7 +171,7 @@ func build_properties_from_links(links []string) []model.Property {
 }
 
 func scrape_properties() []string {
-	from_value := 680
+	from_value := 0
 	c := colly.NewCollector()
 	// On every a element which has href attribute call callback
 	links := []string{}
@@ -191,7 +191,7 @@ func scrape_properties() []string {
 	})
 
 	// Start scraping on https://hackerspaces.org
-	for i := from_value; i < 700; i += 20 {
+	for i := from_value; i < 1000; i += 20 {
 		page_to_visit := fmt.Sprintf("https://www.daft.ie/property-for-rent/ireland?pageSize=20&from=%d", i)
 		c.Visit(page_to_visit)
 	}
