@@ -14,6 +14,26 @@ const useStats = defineStore('stats', {
       .price_average,
     priceDistributionCurrent: (state) => state.stats[state.stats.length - 1]
       .price_distribution,
+    isAverageTrendUp: (state) => {
+      const last = state.stats[state.stats.length - 1];
+      const secondLast = state.stats[state.stats.length - 2];
+      return last.price_average > secondLast.price_average;
+    },
+    isLowestTrendUp: (state) => {
+      const last = state.stats[state.stats.length - 1];
+      const secondLast = state.stats[state.stats.length - 2];
+      return last.price_low > secondLast.price_low;
+    },
+    averageDifferencePercentage: (state) => {
+      const last = state.stats[state.stats.length - 1];
+      const secondLast = state.stats[state.stats.length - 2];
+      return (last.price_average - secondLast.price_average) / last.price_average;
+    },
+    lowestDifferencePercentage: (state) => {
+      const last = state.stats[state.stats.length - 1];
+      const secondLast = state.stats[state.stats.length - 2];
+      return (last.price_low - secondLast.price_low) / last.price_low;
+    },
 
   },
 

@@ -8,12 +8,20 @@
         <h1 class="text-xl">
           Average Rent
           <font-awesome-icon
+            v-if="isAverageTrendUp"
+            class="text-green-400"
+            icon="fa-solid fa-arrow-trend-up"
+          />
+          <font-awesome-icon
+            v-if="!isAverageTrendUp"
             class="text-red-400"
             icon="fa-solid fa-arrow-trend-down"
           />
         </h1>
         <p class="text-accent text-xs">
-          3.5% lower than last month
+          {{ averageDifferencePercentage }}%
+          {{ isAverageTrendUp ? 'higher' : 'lower' }}
+          than last month
         </p>
 
         <p>
@@ -24,19 +32,28 @@
         <h1 class="text-xl">
           Lowest Rent
           <font-awesome-icon
+            v-if="isLowestTrendUp"
             class="text-green-400"
             icon="fa-solid fa-arrow-trend-up"
           />
+          <font-awesome-icon
+            v-if="!isLowestTrendUp"
+            class="text-red-400"
+            icon="fa-solid fa-arrow-trend-down"
+          />
         </h1>
         <p class="text-accent text-xs">
-          15% higher than last month
+          {{ lowestDifferencePercentage }}%
+          {{ isLowestTrendUp ? 'higher' : 'lower' }}
+          than last month
         </p>
         <p>
           €{{ lowestPrice }}
         </p>
       </div>
     </div>
-    <div class="py-2 px-2 m-2 bg-base-300 rounded">
+    <div class="py-2 px-2 rounded">
+      <h1>Price Distribution (Today)</h1>
       <PriceDistributionChart :price-distribution="priceDistribution" />
     </div>
   </div>
@@ -65,6 +82,20 @@ export default {
     },
     lowestPrice() {
       return this.statsStore.priceLowCurrent;
+    },
+    isAverageTrendUp() {
+      return this.statsStore.isAverageTrendUp;
+    },
+    isLowestTrendUp() {
+      return this.statsStore.isLowestTrendUp;
+    },
+    averageDifferencePercentage() {
+      const diff = this.statsStore.averageDifferencePercentage;
+      return Math.round(diff * 100);
+    },
+    lowestDifferencePercentage() {
+      const diff = this.statsStore.lowestDifferencePercentage;
+      return Math.round(diff * 100);
     },
   },
 };
