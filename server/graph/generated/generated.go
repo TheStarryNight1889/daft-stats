@@ -51,6 +51,7 @@ type ComplexityRoot struct {
 		ID       func(childComplexity int) int
 		Location func(childComplexity int) int
 		Price    func(childComplexity int) int
+		Removed  func(childComplexity int) int
 		Type     func(childComplexity int) int
 		URL      func(childComplexity int) int
 		Views    func(childComplexity int) int
@@ -58,7 +59,7 @@ type ComplexityRoot struct {
 
 	Query struct {
 		Properties func(childComplexity int) int
-		Property   func(childComplexity int, id string) int
+		Property   func(childComplexity int, daftID int) int
 		Stats      func(childComplexity int) int
 	}
 
@@ -73,7 +74,7 @@ type ComplexityRoot struct {
 }
 
 type QueryResolver interface {
-	Property(ctx context.Context, id string) (*model.Property, error)
+	Property(ctx context.Context, daftID int) (*model.Property, error)
 	Properties(ctx context.Context) ([]*model.Property, error)
 	Stats(ctx context.Context) ([]*model.Stat, error)
 }
@@ -142,6 +143,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Property.Price(childComplexity), true
 
+	case "Property.removed":
+		if e.complexity.Property.Removed == nil {
+			break
+		}
+
+		return e.complexity.Property.Removed(childComplexity), true
+
 	case "Property.type":
 		if e.complexity.Property.Type == nil {
 			break
@@ -180,7 +188,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.Property(childComplexity, args["_id"].(string)), true
+		return e.complexity.Query.Property(childComplexity, args["daft_id"].(int)), true
 
 	case "Query.stats":
 		if e.complexity.Query.Stats == nil {
@@ -298,6 +306,7 @@ type Property {
   daft_id: Int!
   bathroom: Int!
   bed: Int!
+  removed: String!
 }
 type Stat {
   _id: ID!
@@ -308,7 +317,7 @@ type Stat {
   price_distribution: [Int!]!
 }
 type Query {
-  property(_id: String!): Property!
+  property(daft_id: Int!): Property!
   properties: [Property!]!
 
   stats: [Stat!]!
@@ -339,15 +348,15 @@ func (ec *executionContext) field_Query___type_args(ctx context.Context, rawArgs
 func (ec *executionContext) field_Query_property_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 string
-	if tmp, ok := rawArgs["_id"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("_id"))
-		arg0, err = ec.unmarshalNString2string(ctx, tmp)
+	var arg0 int
+	if tmp, ok := rawArgs["daft_id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("daft_id"))
+		arg0, err = ec.unmarshalNInt2int(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
-	args["_id"] = arg0
+	args["daft_id"] = arg0
 	return args, nil
 }
 
@@ -829,6 +838,50 @@ func (ec *executionContext) fieldContext_Property_bed(ctx context.Context, field
 	return fc, nil
 }
 
+func (ec *executionContext) _Property_removed(ctx context.Context, field graphql.CollectedField, obj *model.Property) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Property_removed(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Removed, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Property_removed(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Property",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Query_property(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Query_property(ctx, field)
 	if err != nil {
@@ -843,7 +896,7 @@ func (ec *executionContext) _Query_property(ctx context.Context, field graphql.C
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Property(rctx, fc.Args["_id"].(string))
+		return ec.resolvers.Query().Property(rctx, fc.Args["daft_id"].(int))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -888,6 +941,8 @@ func (ec *executionContext) fieldContext_Query_property(ctx context.Context, fie
 				return ec.fieldContext_Property_bathroom(ctx, field)
 			case "bed":
 				return ec.fieldContext_Property_bed(ctx, field)
+			case "removed":
+				return ec.fieldContext_Property_removed(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Property", field.Name)
 		},
@@ -965,6 +1020,8 @@ func (ec *executionContext) fieldContext_Query_properties(ctx context.Context, f
 				return ec.fieldContext_Property_bathroom(ctx, field)
 			case "bed":
 				return ec.fieldContext_Property_bed(ctx, field)
+			case "removed":
+				return ec.fieldContext_Property_removed(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Property", field.Name)
 		},
@@ -3280,6 +3337,13 @@ func (ec *executionContext) _Property(ctx context.Context, sel ast.SelectionSet,
 		case "bed":
 
 			out.Values[i] = ec._Property_bed(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "removed":
+
+			out.Values[i] = ec._Property_removed(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				invalids++

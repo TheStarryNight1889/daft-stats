@@ -13,6 +13,7 @@ type Property struct {
 	DaftID   int    `json:"daft_id"`
 	Bathroom int    `json:"bathroom"`
 	Bed      int    `json:"bed"`
+	Removed  string `json:"removed"`
 }
 
 type Stat struct {

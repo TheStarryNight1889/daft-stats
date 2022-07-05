@@ -13,6 +13,7 @@ type Property {
   daft_id: Int!
   bathroom: Int!
   bed: Int!
+  removed: String!
 }
 type Stat {
   _id: ID!
@@ -23,7 +24,7 @@ type Stat {
   price_distribution: [Int!]!
 }
 type Query {
-  property(_id: String!): Property!
+  property(daft_id: Int!): Property!
   properties: [Property!]!
 
   stats: [Stat!]!

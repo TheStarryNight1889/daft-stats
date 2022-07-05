@@ -5,8 +5,10 @@ import (
 	"daft-stats/graph/model"
 	"daft-stats/services"
 	"fmt"
+	"reflect"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/gocolly/colly"
 )
@@ -22,28 +24,42 @@ func GetProperties() {
 
 func save(properties []model.Property) {
 	db := db.Connect()
+
 	// only save properties that do not already exist by daft id
 	// if any of the fields have changed, update the existing record
-	// if a property that did exist, does not exist anymore, update the removed field to todays timestamp
 	for _, p := range properties {
-		// check if property exists
-		property, err := services.FindProperty(db, strconv.Itoa(p.DaftID))
+		existing_property, err := services.FindPropertyByDaftID(db, p.DaftID)
 		if err != nil {
-			// property does not exist, create it
-			err = services.InsertProperty(db, p)
-			if err != nil {
-				fmt.Println(err)
+			fmt.Printf("Error getting property by daft id: %s\n", err)
+			services.InsertProperty(db, p)
+			fmt.Printf("Inserted property: %d\n", p.DaftID)
+		} else if !reflect.DeepEqual(existing_property, &p) {
+			fmt.Println("Property already exists, some changed values, updating")
+			services.UpdateProperty(db, p)
+		}
+	}
+	// if an existing property is not in the properties array, update it's removed field to todays date
+	existing_properties, err := services.FindProperties(db)
+	if err != nil {
+		fmt.Printf("Error finding properties: %d\n", err)
+	}
+	for _, e := range existing_properties {
+		found := false
+		for _, p := range properties {
+			if e.DaftID == p.DaftID {
+				found = true
 			}
-		} else {
-			if p.Price != property.Price || p.Location != property.Location || p.URL != property.URL || p.Entered != property.Entered || p.Views != property.Views || p.Type != property.Type || p.Bathroom != property.Bathroom || p.Bed != property.Bed {
-				// fields have changed, update the existing record
-				err = services.UpdateProperty(db, p)
-				if err != nil {
-					fmt.Println(err)
-				}
+		}
+		if !found {
+			e.Removed = time.Now().String()
+			deref := *e
+			err := services.UpdateProperty(db, deref)
+			if err != nil {
+				fmt.Printf("Error updating property: %d\n", err)
 			}
 		}
 	}
+
 }
 
 func scrape() []model.Property {
@@ -155,7 +171,7 @@ func build_properties_from_links(links []string) []model.Property {
 }
 
 func scrape_properties() []string {
-	from_value := 700
+	from_value := 680
 	c := colly.NewCollector()
 	// On every a element which has href attribute call callback
 	links := []string{}
@@ -175,7 +191,7 @@ func scrape_properties() []string {
 	})
 
 	// Start scraping on https://hackerspaces.org
-	for i := from_value; i < 1000; i += 20 {
+	for i := from_value; i < 700; i += 20 {
 		page_to_visit := fmt.Sprintf("https://www.daft.ie/property-for-rent/ireland?pageSize=20&from=%d", i)
 		c.Visit(page_to_visit)
 	}

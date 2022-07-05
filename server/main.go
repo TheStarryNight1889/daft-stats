@@ -3,6 +3,7 @@ package main
 import (
 	"daft-stats/graph"
 	"daft-stats/graph/generated"
+	"daft-stats/jobs"
 	"net/http"
 	"os"
 
@@ -17,7 +18,7 @@ import (
 const defaultPort = "3000"
 
 func main() {
-	// jobs.GetProperties()
+	jobs.GetProperties()
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = defaultPort

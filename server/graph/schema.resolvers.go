@@ -11,8 +11,8 @@ import (
 	"daft-stats/services"
 )
 
-func (r *queryResolver) Property(ctx context.Context, id string) (*model.Property, error) {
-	return services.FindProperty(DB, id)
+func (r *queryResolver) Property(ctx context.Context, daftID int) (*model.Property, error) {
+	return services.FindPropertyByDaftID(DB, daftID)
 }
 
 func (r *queryResolver) Properties(ctx context.Context) ([]*model.Property, error) {

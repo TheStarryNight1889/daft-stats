@@ -18,7 +18,7 @@ func InsertProperty(db *mongo.Database, property model.Property) error {
 
 func UpdateProperty(db *mongo.Database, property model.Property) error {
 	collection := db.Collection("properties")
-	_, err := collection.UpdateOne(context.TODO(), bson.D{{"_id", property.ID}}, property)
+	_, err := collection.ReplaceOne(context.TODO(), bson.M{"daftid": property.DaftID}, property)
 	if err != nil {
 		return err
 	}
@@ -44,10 +44,10 @@ func FindProperties(db *mongo.Database) ([]*model.Property, error) {
 	return properties, nil
 }
 
-func FindProperty(db *mongo.Database, id string) (*model.Property, error) {
+func FindPropertyByDaftID(db *mongo.Database, daftid int) (*model.Property, error) {
 	var property model.Property
 	collection := db.Collection("properties")
-	err := collection.FindOne(context.TODO(), bson.D{{"_id", id}}).Decode(&property)
+	err := collection.FindOne(context.TODO(), bson.M{"daftid": daftid}).Decode(&property)
 	if err != nil {
 		return nil, err
 	}

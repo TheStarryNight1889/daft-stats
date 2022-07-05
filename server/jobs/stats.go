@@ -5,6 +5,7 @@ import (
 	"daft-stats/graph/model"
 	"daft-stats/services"
 	"math"
+	"time"
 )
 
 func GenerateStats(properties []model.Property) {
@@ -17,7 +18,7 @@ func GenerateStats(properties []model.Property) {
 
 	// make a new stats object
 	stats := model.Stat{
-		Timestamp:         "",
+		Timestamp:         time.Now().String(),
 		PriceAverage:      price_average,
 		PriceHigh:         price_high,
 		PriceLow:          price_low,
