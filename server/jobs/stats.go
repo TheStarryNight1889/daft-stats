@@ -8,9 +8,8 @@ import (
 	"time"
 )
 
-func GenerateStats(properties []model.Property) {
+func GenerateStats(properties []model.Property, added int, removed int) {
 	db := db.Connect()
-
 	price_average := calculateAveragePrice(properties)
 	price_high := calculateHighestPrice(properties)
 	price_low := calculateLowestPrice(properties)
@@ -23,6 +22,8 @@ func GenerateStats(properties []model.Property) {
 		PriceHigh:         price_high,
 		PriceLow:          price_low,
 		PriceDistribution: price_distribution,
+		PropertiesAdded:   added,
+		PropertiesRemoved: removed,
 	}
 	services.InsertStats(db, stats)
 

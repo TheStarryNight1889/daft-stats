@@ -22,6 +22,8 @@ type Stat {
   price_high: Float!
   price_low: Float!
   price_distribution: [Int!]!
+  properties_added: Int!
+  properties_removed: Int!
 }
 type Query {
   property(daft_id: Int!): Property!

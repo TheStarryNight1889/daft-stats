@@ -23,4 +23,6 @@ type Stat struct {
 	PriceHigh         float64 `json:"price_high"`
 	PriceLow          float64 `json:"price_low"`
 	PriceDistribution []int   `json:"price_distribution"`
+	PropertiesAdded   int     `json:"properties_added"`
+	PropertiesRemoved int     `json:"properties_removed"`
 }

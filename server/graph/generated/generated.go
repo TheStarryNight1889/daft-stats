@@ -69,6 +69,8 @@ type ComplexityRoot struct {
 		PriceDistribution func(childComplexity int) int
 		PriceHigh         func(childComplexity int) int
 		PriceLow          func(childComplexity int) int
+		PropertiesAdded   func(childComplexity int) int
+		PropertiesRemoved func(childComplexity int) int
 		Timestamp         func(childComplexity int) int
 	}
 }
@@ -232,6 +234,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Stat.PriceLow(childComplexity), true
 
+	case "Stat.properties_added":
+		if e.complexity.Stat.PropertiesAdded == nil {
+			break
+		}
+
+		return e.complexity.Stat.PropertiesAdded(childComplexity), true
+
+	case "Stat.properties_removed":
+		if e.complexity.Stat.PropertiesRemoved == nil {
+			break
+		}
+
+		return e.complexity.Stat.PropertiesRemoved(childComplexity), true
+
 	case "Stat.timestamp":
 		if e.complexity.Stat.Timestamp == nil {
 			break
@@ -315,6 +331,8 @@ type Stat {
   price_high: Float!
   price_low: Float!
   price_distribution: [Int!]!
+  properties_added: Int!
+  properties_removed: Int!
 }
 type Query {
   property(daft_id: Int!): Property!
@@ -1080,6 +1098,10 @@ func (ec *executionContext) fieldContext_Query_stats(ctx context.Context, field 
 				return ec.fieldContext_Stat_price_low(ctx, field)
 			case "price_distribution":
 				return ec.fieldContext_Stat_price_distribution(ctx, field)
+			case "properties_added":
+				return ec.fieldContext_Stat_properties_added(ctx, field)
+			case "properties_removed":
+				return ec.fieldContext_Stat_properties_removed(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Stat", field.Name)
 		},
@@ -1468,6 +1490,94 @@ func (ec *executionContext) _Stat_price_distribution(ctx context.Context, field 
 }
 
 func (ec *executionContext) fieldContext_Stat_price_distribution(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Stat",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Stat_properties_added(ctx context.Context, field graphql.CollectedField, obj *model.Stat) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Stat_properties_added(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PropertiesAdded, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Stat_properties_added(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Stat",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Stat_properties_removed(ctx context.Context, field graphql.CollectedField, obj *model.Stat) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Stat_properties_removed(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PropertiesRemoved, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Stat_properties_removed(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Stat",
 		Field:      field,
@@ -3518,6 +3628,20 @@ func (ec *executionContext) _Stat(ctx context.Context, sel ast.SelectionSet, obj
 		case "price_distribution":
 
 			out.Values[i] = ec._Stat_price_distribution(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "properties_added":
+
+			out.Values[i] = ec._Stat_properties_added(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "properties_removed":
+
+			out.Values[i] = ec._Stat_properties_removed(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				invalids++

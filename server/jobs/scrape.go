@@ -18,20 +18,23 @@ const uri = "mongodb://localhost:27017"
 
 func GetProperties() {
 	properties := scrape()
-	save(properties)
-	GenerateStats(properties)
+	added, removed := save(properties)
+	GenerateStats(properties, added, removed)
 }
 
-func save(properties []model.Property) {
+func save(properties []model.Property) (int, int) {
 	db := db.Connect()
 
 	// only save properties that do not already exist by daft id
 	// if any of the fields have changed, update the existing record
+	added := 0
+	removed := 0
 	for _, p := range properties {
 		existing_property, err := services.FindPropertyByDaftID(db, p.DaftID)
 		if err != nil {
 			fmt.Printf("Error getting property by daft id: %s\n", err)
 			services.InsertProperty(db, p)
+			added += 1
 			fmt.Printf("Inserted property: %d\n", p.DaftID)
 		} else if !reflect.DeepEqual(existing_property, &p) {
 			fmt.Println("Property already exists, some changed values, updating")
@@ -50,15 +53,17 @@ func save(properties []model.Property) {
 				found = true
 			}
 		}
-		if !found {
+		if !found && e.Removed == "" {
 			e.Removed = time.Now().String()
 			deref := *e
 			err := services.UpdateProperty(db, deref)
+			removed += 1
 			if err != nil {
 				fmt.Printf("Error updating property: %d\n", err)
 			}
 		}
 	}
+	return added, removed
 
 }
 
