@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="grid bg-base-300 grid-cols-2 my-4 py-4 px-6 divide-x-2">
+    <div class="grid bg-base-300 grid-cols-2 my-4 py-4 px-2 divide-x-2">
       <h1 class=" col-span-2 text-2xl font-bold">
         Quick Stats
       </h1>
@@ -31,6 +31,52 @@
       <div class="my-2">
         <h1 class="text-xl">
           Lowest Rent
+          <font-awesome-icon
+            v-if="isLowestTrendUp"
+            class="text-green-400"
+            icon="fa-solid fa-arrow-trend-up"
+          />
+          <font-awesome-icon
+            v-if="!isLowestTrendUp"
+            class="text-red-400"
+            icon="fa-solid fa-arrow-trend-down"
+          />
+        </h1>
+        <p class="text-accent text-xs">
+          {{ lowestDifferencePercentage }}%
+          {{ isLowestTrendUp ? 'higher' : 'lower' }}
+          than last month
+        </p>
+        <p>
+          €{{ lowestPrice }}
+        </p>
+      </div>
+      <div class="my-2">
+        <h1 class="text-xl">
+          Highest Rent
+          <font-awesome-icon
+            v-if="isHighestTrendUp"
+            class="text-green-400"
+            icon="fa-solid fa-arrow-trend-up"
+          />
+          <font-awesome-icon
+            v-if="!isHighestTrendUp"
+            class="text-red-400"
+            icon="fa-solid fa-arrow-trend-down"
+          />
+        </h1>
+        <p class="text-accent text-xs">
+          {{ highestDifferencePercentage }}%
+          {{ isHighestTrendUp ? 'higher' : 'lower' }}
+          than last month
+        </p>
+        <p>
+          €{{ highestPrice }}
+        </p>
+      </div>
+      <div class="my-2">
+        <h1 class="text-xl">
+          New Rentals
           <font-awesome-icon
             v-if="isLowestTrendUp"
             class="text-green-400"
@@ -83,19 +129,29 @@ export default {
     lowestPrice() {
       return this.statsStore.priceLowCurrent;
     },
+    highestPrice() {
+      return this.statsStore.priceHighCurrent;
+    },
     isAverageTrendUp() {
       return this.statsStore.isAverageTrendUp;
     },
     isLowestTrendUp() {
       return this.statsStore.isLowestTrendUp;
     },
+    isHighestTrendUp() {
+      return this.statsStore.isHighestTrendUp;
+    },
     averageDifferencePercentage() {
       const diff = this.statsStore.averageDifferencePercentage;
-      return Math.round(diff * 100);
+      return (diff * 100).toFixed(2);
     },
     lowestDifferencePercentage() {
       const diff = this.statsStore.lowestDifferencePercentage;
-      return Math.round(diff * 100);
+      return (diff * 100).toFixed(2);
+    },
+    highestDifferencePercentage() {
+      const diff = this.statsStore.highestDifferencePercentage;
+      return (diff * 100).toFixed(2);
     },
   },
 };

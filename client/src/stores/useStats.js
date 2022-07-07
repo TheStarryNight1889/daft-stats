@@ -24,6 +24,11 @@ const useStats = defineStore('stats', {
       const secondLast = state.stats[state.stats.length - 2];
       return last.price_low > secondLast.price_low;
     },
+    isHighestTrendUp: (state) => {
+      const last = state.stats[state.stats.length - 1];
+      const secondLast = state.stats[state.stats.length - 2];
+      return last.price_high > secondLast.price_high;
+    },
     averageDifferencePercentage: (state) => {
       const last = state.stats[state.stats.length - 1];
       const secondLast = state.stats[state.stats.length - 2];
@@ -33,6 +38,11 @@ const useStats = defineStore('stats', {
       const last = state.stats[state.stats.length - 1];
       const secondLast = state.stats[state.stats.length - 2];
       return (last.price_low - secondLast.price_low) / last.price_low;
+    },
+    highestDifferencePercentage: (state) => {
+      const last = state.stats[state.stats.length - 1];
+      const secondLast = state.stats[state.stats.length - 2];
+      return (last.price_high - secondLast.price_high) / last.price_high;
     },
 
   },
