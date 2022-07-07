@@ -6,6 +6,7 @@ const useStats = defineStore('stats', {
     stats: [],
   }),
   getters: {
+    // TODO remove repeated code
     priceLowCurrent: (state) => state.stats[state.stats.length - 1]
       .price_low,
     priceHighCurrent: (state) => state.stats[state.stats.length - 1]
@@ -14,6 +15,8 @@ const useStats = defineStore('stats', {
       .price_average,
     priceDistributionCurrent: (state) => state.stats[state.stats.length - 1]
       .price_distribution,
+    propertiesAddedCurrent: (state) => state.stats[state.stats.length - 1]
+      .properties_added,
     isAverageTrendUp: (state) => {
       const last = state.stats[state.stats.length - 1];
       const secondLast = state.stats[state.stats.length - 2];
@@ -29,6 +32,11 @@ const useStats = defineStore('stats', {
       const secondLast = state.stats[state.stats.length - 2];
       return last.price_high > secondLast.price_high;
     },
+    isPropertyAddedTrendUp: (state) => {
+      const last = state.stats[state.stats.length - 1];
+      const secondLast = state.stats[state.stats.length - 2];
+      return last.properties_added > secondLast.properties_added;
+    },
     averageDifferencePercentage: (state) => {
       const last = state.stats[state.stats.length - 1];
       const secondLast = state.stats[state.stats.length - 2];
@@ -43,6 +51,12 @@ const useStats = defineStore('stats', {
       const last = state.stats[state.stats.length - 1];
       const secondLast = state.stats[state.stats.length - 2];
       return (last.price_high - secondLast.price_high) / last.price_high;
+    },
+    // TODO this will produce infinty if there are no properties
+    propertiesAddedDifferencePercentage: (state) => {
+      const last = state.stats[state.stats.length - 1];
+      const secondLast = state.stats[state.stats.length - 2];
+      return (last.properties_added - secondLast.properties_added) / last.properties_added;
     },
 
   },

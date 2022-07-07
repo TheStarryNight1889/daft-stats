@@ -18,9 +18,9 @@ Daft Stats is currently in development and has no live site for public access.
 - Monthly Lowest Price trend & percentage change
 - Daily Price Distribution chart
 - Highest price for the day
+- Count of new properties added in the day
 
 ### TODO Stats
-- Count of new properties added in the day
 - Average price of new properties added in the day
 - Timeseries charts of average price, low price, high price
 - Percentage change of amount of properties added daily over time

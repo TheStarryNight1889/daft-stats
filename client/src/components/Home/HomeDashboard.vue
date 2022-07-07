@@ -78,23 +78,23 @@
         <h1 class="text-xl">
           New Rentals
           <font-awesome-icon
-            v-if="isLowestTrendUp"
+            v-if="isPropertiesAddedTrendUp"
             class="text-green-400"
             icon="fa-solid fa-arrow-trend-up"
           />
           <font-awesome-icon
-            v-if="!isLowestTrendUp"
+            v-if="!isPropertiesAddedTrendUp"
             class="text-red-400"
             icon="fa-solid fa-arrow-trend-down"
           />
         </h1>
         <p class="text-accent text-xs">
-          {{ lowestDifferencePercentage }}%
-          {{ isLowestTrendUp ? 'higher' : 'lower' }}
+          {{ propertiesAddedDifferencePercentage }}%
+          {{ isPropertiesAddedTrendUp ? 'higher' : 'lower' }}
           than last month
         </p>
         <p>
-          €{{ lowestPrice }}
+          {{ propertiesAdded }}
         </p>
       </div>
     </div>
@@ -132,6 +132,9 @@ export default {
     highestPrice() {
       return this.statsStore.priceHighCurrent;
     },
+    propertiesAdded() {
+      return this.statsStore.propertiesAddedCurrent;
+    },
     isAverageTrendUp() {
       return this.statsStore.isAverageTrendUp;
     },
@@ -140,6 +143,9 @@ export default {
     },
     isHighestTrendUp() {
       return this.statsStore.isHighestTrendUp;
+    },
+    isPropertiesAddedTrendUp() {
+      return this.statsStore.isPropertiesAddedTrendUp;
     },
     averageDifferencePercentage() {
       const diff = this.statsStore.averageDifferencePercentage;
@@ -151,6 +157,10 @@ export default {
     },
     highestDifferencePercentage() {
       const diff = this.statsStore.highestDifferencePercentage;
+      return (diff * 100).toFixed(2);
+    },
+    propertiesAddedDifferencePercentage() {
+      const diff = this.statsStore.propertiesAddedDifferencePercentage;
       return (diff * 100).toFixed(2);
     },
   },

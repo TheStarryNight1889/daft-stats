@@ -18,6 +18,8 @@ const statsQuery = `
           price_high
           price_low
           price_distribution
+          properties_added
+          properties_removed
         }
     }
 `;
