@@ -1,7 +1,6 @@
 <template>
   <apexchart
-    type="bar"
-    title="Rent"
+    type="area"
     :options="chartOptions"
     :series="series"
   />
@@ -10,51 +9,75 @@
 <script>
 
 export default {
-  name: 'PriceDistributionChart',
+  name: 'PriceAverageChart',
   props: {
-    priceDistribution: {
-      type: Array,
+    priveAverageTimseries: {
+      type: Object,
       required: true,
     },
   },
   data() {
     return {
+      series: [{
+        name: 'Average Price',
+        data: this.priveAverageTimseries,
+      }],
       chartOptions: {
         chart: {
-          id: 'vuechart-example',
+          type: 'line',
+          stacked: false,
+          height: 350,
+          zoom: {
+            type: 'x',
+            enabled: true,
+            autoScaleYaxis: true,
+          },
+          toolbar: {
+            autoSelected: 'zoom',
+          },
         },
-        xaxis: {
-          categories: [
-            '€0-€500',
-            '€500-€1,000',
-            '€1,000-€1,500',
-            '€1,500-€2,000',
-            '€2,000-€2,500',
-            '€2,500-€3,000',
-            '€3,000-€3,500',
-            '€3,500-€4,000',
-            '€4,000-€4,500',
-            '€4,500-€5,000',
-            '€5,000+',
-          ],
+        stroke: {
+          curve: 'straight',
         },
-        responsive: [
-          {
-            breakpoint: 480,
-            options: {
-              chart: {
-                width: '100%',
-              },
+        dataLabels: {
+          enabled: false,
+        },
+        markers: {
+          size: 0,
+        },
+        title: {
+          text: 'Rent Average (Timeseries)',
+          align: 'left',
+        },
+        fill: {
+          type: 'gradient',
+          gradient: {
+            shadeIntensity: 1,
+            inverseColors: false,
+            opacityFrom: 0.5,
+            opacityTo: 0,
+            stops: [0, 90, 100],
+          },
+        },
+        yaxis: {
+          labels: {
+            formatter(val) {
+              return `€${(val).toFixed(0)}`;
             },
           },
-        ],
-      },
-      series: [
-        {
-          name: 'series-1',
-          data: this.priceDistribution,
+          title: {
+            text: 'Price',
+          },
         },
-      ],
+        xaxis: {
+          type: 'datetime',
+        },
+        tooltip: {
+          shared: false,
+          y: {
+          },
+        },
+      },
     };
   },
 };

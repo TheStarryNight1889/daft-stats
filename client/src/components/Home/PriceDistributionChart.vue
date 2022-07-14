@@ -23,6 +23,10 @@ export default {
         chart: {
           id: 'vuechart-example',
         },
+        title: {
+          text: 'Price Distribution (Today)',
+          align: 'left',
+        },
         xaxis: {
           categories: [
             '€0-€500',
@@ -38,6 +42,13 @@ export default {
             '€5,000+',
           ],
         },
+        yaxis: {
+          labels: {
+          },
+          title: {
+            text: 'Houses',
+          },
+        },
         responsive: [
           {
             breakpoint: 480,
@@ -51,7 +62,7 @@ export default {
       },
       series: [
         {
-          name: 'series-1',
+          name: 'Houses',
           data: this.priceDistribution,
         },
       ],

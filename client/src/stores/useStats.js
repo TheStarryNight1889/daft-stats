@@ -59,6 +59,18 @@ const useStats = defineStore('stats', {
       return (last.properties_added - secondLast.properties_added) / last.properties_added;
     },
 
+    priceAverageTimeseries: (state) => {
+      // return an object of the form [{x:, y:}, {x:, y:}];
+      const timeseries = [];
+      state.stats.forEach((stat) => {
+        timeseries.push({
+          x: new Date(stat.timestamp.split('.')[0]),
+          y: stat.price_average,
+        });
+      });
+      return timeseries;
+    },
+
   },
 
   actions: {

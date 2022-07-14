@@ -99,8 +99,10 @@
       </div>
     </div>
     <div class="py-2 px-2 rounded">
-      <h1>Price Distribution (Today)</h1>
       <PriceDistributionChart :price-distribution="priceDistribution" />
+    </div>
+    <div class="py-2 px-2 rounded">
+      <PriceAverageChart :prive-average-timseries="priceAverageTimeseries" />
     </div>
   </div>
 </template>
@@ -108,10 +110,11 @@
 <script>
 import useStats from '../../stores/useStats';
 import PriceDistributionChart from './PriceDistributionChart.vue';
+import PriceAverageChart from './PriceAverageChart.vue';
 
 export default {
   name: 'HomeDashboard',
-  components: { PriceDistributionChart },
+  components: { PriceDistributionChart, PriceAverageChart },
   async setup() {
     const statsStore = useStats();
     await statsStore.FetchAllStats();
@@ -162,6 +165,9 @@ export default {
     propertiesAddedDifferencePercentage() {
       const diff = this.statsStore.propertiesAddedDifferencePercentage;
       return (diff * 100).toFixed(2);
+    },
+    priceAverageTimeseries() {
+      return this.statsStore.priceAverageTimeseries;
     },
   },
 };
