@@ -78,19 +78,19 @@
         <h1 class="text-xl">
           New Rentals
           <font-awesome-icon
-            v-if="isPropertiesAddedTrendUp"
+            v-if="isPropertyAddedTrendUp"
             class="text-green-400"
             icon="fa-solid fa-arrow-trend-up"
           />
           <font-awesome-icon
-            v-if="!isPropertiesAddedTrendUp"
+            v-if="!isPropertyAddedTrendUp"
             class="text-red-400"
             icon="fa-solid fa-arrow-trend-down"
           />
         </h1>
         <p class="text-accent text-xs">
           {{ propertiesAddedDifferencePercentage }}%
-          {{ isPropertiesAddedTrendUp ? 'higher' : 'lower' }}
+          {{ isPropertyAddedTrendUp ? 'higher' : 'lower' }}
           than last month
         </p>
         <p>
@@ -144,8 +144,8 @@ export default {
     isHighestTrendUp() {
       return this.statsStore.isHighestTrendUp;
     },
-    isPropertiesAddedTrendUp() {
-      return this.statsStore.isPropertiesAddedTrendUp;
+    isPropertyAddedTrendUp() {
+      return this.statsStore.isPropertyAddedTrendUp;
     },
     averageDifferencePercentage() {
       const diff = this.statsStore.averageDifferencePercentage;
