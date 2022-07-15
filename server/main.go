@@ -6,11 +6,13 @@ import (
 	"daft-stats/jobs"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/handler/transport"
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/go-chi/chi"
+	"github.com/go-co-op/gocron"
 	"github.com/gorilla/websocket"
 	"github.com/rs/cors"
 )
@@ -18,7 +20,11 @@ import (
 const defaultPort = "3000"
 
 func main() {
-	jobs.GetProperties()
+	cron := gocron.NewScheduler(time.UTC)
+	cron.Every(1).Day().At("00:01").Do(func() {
+		jobs.GetProperties()
+	})
+	cron.StartAsync()
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = defaultPort
