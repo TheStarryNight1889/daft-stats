@@ -1,10 +1,7 @@
 const axios = require('axios').default;
 
 // get SERVER_URL from env
-let { SERVER_URL } = process.env;
-if (SERVER_URL === undefined) {
-  SERVER_URL = 'http://localhost:3000';
-}
+const { SERVER_URL } = process.env;
 
 axios.defaults.baseURL = `${SERVER_URL}/query`;
 
