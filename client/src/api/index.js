@@ -1,10 +1,10 @@
 const axios = require('axios').default;
 
 // get SERVER_URL from env
-const serverUrl = process.env.SERVER_URL;
-console.log(process.env);
+// const serverUrl = process.env.SERVER_URL;
+// console.log(process.env);
 
-axios.defaults.baseURL = `${serverUrl}/query`;
+axios.defaults.baseURL = 'https://king-prawn-app-ieumk.ondigitalocean.app/query';
 
 // graph query
 const propertiesQuery = `
