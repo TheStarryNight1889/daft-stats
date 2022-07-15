@@ -1,0 +1,15 @@
+name: client
+region: lon
+services:
+- dockerfile_path: client/Dockerfile
+  github:
+    branch: master
+    deploy_on_push: true
+    repo: TheStarryNight1889/daft-stats
+  http_port: 8080
+  instance_count: 1
+  instance_size_slug: basic-xxs
+  name: daft-stats-client
+  routes:
+  - path: /
+  source_dir: client

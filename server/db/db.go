@@ -19,10 +19,10 @@ func Connect() *mongo.Database {
 	}
 	host := os.Getenv("DB_HOST")
 	if host == "" {
-		host = "localhost"
+		host = "mongodb://localhost"
 	}
 	// build connection URI
-	uri := fmt.Sprintf("mongodb://%s:%s", host, port)
+	uri := fmt.Sprintf("%s:%s", host, port)
 
 	// if env DB_USER, DB_PASS are set, use them
 	// otherwise use default values
