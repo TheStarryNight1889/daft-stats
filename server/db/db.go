@@ -10,8 +10,11 @@ import (
 )
 
 func Connect() *mongo.Database {
-
 	mongostring := os.Getenv("MONGO_URI")
+	if mongostring == "" {
+		mongostring = "mongodb://root:example@127.0.0.1/"
+	}
+
 	clientOpts := options.Client().ApplyURI(mongostring)
 	client, err := mongo.Connect(context.TODO(), clientOpts)
 	if err != nil {
