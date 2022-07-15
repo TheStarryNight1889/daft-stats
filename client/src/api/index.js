@@ -1,6 +1,6 @@
 const axios = require('axios').default;
 
-axios.defaults.baseURL = 'http://localhost:3000/query';
+axios.defaults.baseURL = 'http://server:3000/query';
 
 // graph query
 const propertiesQuery = `
