@@ -1,9 +1,10 @@
 const axios = require('axios').default;
 
 // get SERVER_URL from env
-const { SERVER_URL } = process.env;
+const serverUrl = process.env.SERVER_URL;
+console.log(process.env);
 
-axios.defaults.baseURL = `${SERVER_URL}/query`;
+axios.defaults.baseURL = `${serverUrl}/query`;
 
 // graph query
 const propertiesQuery = `
