@@ -64,7 +64,7 @@ const useStats = defineStore('stats', {
       const timeseries = [];
       state.stats.forEach((stat) => {
         timeseries.push({
-          x: new Date(stat.timestamp.split('.')[0]),
+          x: new Date(stat.timestamp.split('.')[0].replace(/-/g, '/')),
           y: stat.price_average,
         });
       });
