@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="grid bg-base-300 grid-cols-2 my-2 py-4 px-2 divide-x-2">
+    <div class="grid bg-base-300 grid-cols-2 py-4 px-2 divide-x-2">
       <h1 class=" col-span-2 text-xl font-bold">
         Quick Stats
       </h1>
@@ -98,7 +98,7 @@
         </p>
       </div>
     </div>
-    <div class="py-2 px-2 rounded">
+    <div class="py-2 px-2 my-4 rounded">
       <PriceDistributionChart :price-distribution="priceDistribution" />
     </div>
     <div class="py-2 px-2 rounded">
