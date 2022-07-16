@@ -21,7 +21,7 @@
         <p class="text-accent text-xs">
           {{ averageDifferencePercentage }}%
           {{ isAverageTrendUp ? 'higher' : 'lower' }}
-          than last month
+          than yesterday
         </p>
 
         <p>
@@ -45,7 +45,7 @@
         <p class="text-accent text-xs">
           {{ lowestDifferencePercentage }}%
           {{ isLowestTrendUp ? 'higher' : 'lower' }}
-          than last month
+          than yesterday
         </p>
         <p>
           €{{ lowestPrice }}
@@ -68,7 +68,7 @@
         <p class="text-accent text-xs">
           {{ highestDifferencePercentage }}%
           {{ isHighestTrendUp ? 'higher' : 'lower' }}
-          than last month
+          than yesterday
         </p>
         <p>
           €{{ highestPrice }}
@@ -91,7 +91,7 @@
         <p class="text-accent text-xs">
           {{ propertiesAddedDifferencePercentage }}%
           {{ isPropertyAddedTrendUp ? 'higher' : 'lower' }}
-          than last month
+          than yesterday
         </p>
         <p>
           {{ propertiesAdded }}
