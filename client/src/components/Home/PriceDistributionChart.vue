@@ -55,6 +55,7 @@ export default {
             options: {
               chart: {
                 width: '100%',
+                height: '200%',
               },
             },
           },
