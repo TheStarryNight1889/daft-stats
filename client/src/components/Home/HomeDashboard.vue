@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="grid bg-base-300 grid-cols-2 my-4 py-4 px-2 divide-x-2">
-      <h1 class=" col-span-2 text-2xl font-bold">
+    <div class="grid bg-base-300 grid-cols-2 my-2 py-4 px-2 divide-x-2">
+      <h1 class=" col-span-2 text-xl font-bold">
         Quick Stats
       </h1>
       <div class="my-2">

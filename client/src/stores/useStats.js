@@ -77,7 +77,6 @@ const useStats = defineStore('stats', {
     async FetchAllStats() {
       const { data } = await api.GetAllStats();
       this.stats = data.stats;
-      console.log(this.stats);
     },
   },
 });

@@ -2,7 +2,6 @@ const axios = require('axios').default;
 
 // get SERVER_URL from env
 const serverUrl = process.env.VUE_APP_SERVER_URL;
-console.log(process.env);
 
 axios.defaults.baseURL = serverUrl;
 

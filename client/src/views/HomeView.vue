@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="navbar bg-base-100">
-      <a class="btn btn-ghost normal-case text-xl">DaftStats</a>
+    <div class="navbar bg-base-300">
+      <a class="btn btn-ghost normal-case text-xl">Lafted</a>
     </div>
     <Suspense>
       <HomeDashboard />
