@@ -14,7 +14,7 @@
     </div>
     <div class="divider m-0 p-0 bg-base-300 px-4" />
     <Suspense>
-      <HomeDashboard />
+      <HomeDashboard class="bg-white" />
     </Suspense>
   </div>
 </template>
