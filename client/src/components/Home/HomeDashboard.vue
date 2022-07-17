@@ -8,19 +8,19 @@
         <h1 class="text-xl">
           Average Rent
           <font-awesome-icon
-            v-if="isAverageTrendUp"
+            v-if="isTrendUp('price_average')"
             class="text-green-400"
             icon="fa-solid fa-arrow-trend-up"
           />
           <font-awesome-icon
-            v-if="!isAverageTrendUp"
+            v-if="!isTrendUp('price_average')"
             class="text-red-400"
             icon="fa-solid fa-arrow-trend-down"
           />
         </h1>
         <p class="text-accent text-xs">
           {{ averageDifferencePercentage }}%
-          {{ isAverageTrendUp ? 'higher' : 'lower' }}
+          {{ isTrendUp('price_average') ? 'higher' : 'lower' }}
           than yesterday
         </p>
 
@@ -32,19 +32,19 @@
         <h1 class="text-xl">
           Lowest Rent
           <font-awesome-icon
-            v-if="isLowestTrendUp"
+            v-if="isTrendUp('price_low')"
             class="text-green-400"
             icon="fa-solid fa-arrow-trend-up"
           />
           <font-awesome-icon
-            v-if="!isLowestTrendUp"
+            v-if="!isTrendUp('price_low')"
             class="text-red-400"
             icon="fa-solid fa-arrow-trend-down"
           />
         </h1>
         <p class="text-accent text-xs">
           {{ lowestDifferencePercentage }}%
-          {{ isLowestTrendUp ? 'higher' : 'lower' }}
+          {{ isTrendUp('price_low') ? 'higher' : 'lower' }}
           than yesterday
         </p>
         <p>
@@ -55,19 +55,19 @@
         <h1 class="text-xl">
           Highest Rent
           <font-awesome-icon
-            v-if="isHighestTrendUp"
+            v-if="isTrendUp('price_high')"
             class="text-green-400"
             icon="fa-solid fa-arrow-trend-up"
           />
           <font-awesome-icon
-            v-if="!isHighestTrendUp"
+            v-if="!isTrendUp('price_high')"
             class="text-red-400"
             icon="fa-solid fa-arrow-trend-down"
           />
         </h1>
         <p class="text-accent text-xs">
           {{ highestDifferencePercentage }}%
-          {{ isHighestTrendUp ? 'higher' : 'lower' }}
+          {{ isTrendUp('price_high') ? 'higher' : 'lower' }}
           than yesterday
         </p>
         <p>
@@ -78,19 +78,19 @@
         <h1 class="text-xl">
           New Rentals
           <font-awesome-icon
-            v-if="isPropertyAddedTrendUp"
+            v-if="isTrendUp('properties_added')"
             class="text-green-400"
             icon="fa-solid fa-arrow-trend-up"
           />
           <font-awesome-icon
-            v-if="!isPropertyAddedTrendUp"
+            v-if="!isTrendUp('properties_added')"
             class="text-red-400"
             icon="fa-solid fa-arrow-trend-down"
           />
         </h1>
         <p class="text-accent text-xs">
           {{ propertiesAddedDifferencePercentage }}%
-          {{ isPropertyAddedTrendUp ? 'higher' : 'lower' }}
+          {{ isTrendUp('properties_added') ? 'higher' : 'lower' }}
           than yesterday
         </p>
         <p>
@@ -139,18 +139,6 @@ export default {
     propertiesAdded() {
       return this.statsStore.propertiesAddedCurrent;
     },
-    isAverageTrendUp() {
-      return this.statsStore.isAverageTrendUp;
-    },
-    isLowestTrendUp() {
-      return this.statsStore.isLowestTrendUp;
-    },
-    isHighestTrendUp() {
-      return this.statsStore.isHighestTrendUp;
-    },
-    isPropertyAddedTrendUp() {
-      return this.statsStore.isPropertyAddedTrendUp;
-    },
     averageDifferencePercentage() {
       const diff = this.statsStore.averageDifferencePercentage;
       return (diff * 100).toFixed(2);
@@ -169,6 +157,11 @@ export default {
     },
     priceAverageTimeseries() {
       return this.statsStore.priceAverageTimeseries;
+    },
+  },
+  methods: {
+    isTrendUp(datapoint) {
+      return this.statsStore.isTrendUp(datapoint);
     },
   },
 };
