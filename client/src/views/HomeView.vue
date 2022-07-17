@@ -9,7 +9,7 @@
         >
       </p>
       <p class="text-l px-2">
-        A simple, dashboard for consuming information about the Irish rental market.
+        A simple dashboard for viewing information about the Irish rental market.
       </p>
     </div>
     <div class="divider m-0 p-0 bg-base-300 px-4" />
