@@ -1,9 +1,17 @@
 <template>
-  <apexchart
-    type="area"
-    :options="chartOptions"
-    :series="series"
-  />
+  <div class="text-right">
+    <select class="select select-bordered select-sm max-w-xs mb-4">
+      <option selected>
+        Rent Average
+      </option>
+      <option>Properties Added</option>
+    </select>
+    <apexchart
+      type="area"
+      :options="chartOptions"
+      :series="series"
+    />
+  </div>
 </template>
 
 <script>

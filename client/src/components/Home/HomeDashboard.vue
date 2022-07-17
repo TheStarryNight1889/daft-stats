@@ -98,10 +98,11 @@
         </p>
       </div>
     </div>
-    <div class="py-2 px-2 my-4 rounded">
+    <div class="py-2 px-2 my-2 rounded">
       <PriceDistributionChart :price-distribution="priceDistribution" />
     </div>
-    <div class="py-2 px-2 rounded">
+    <div class="divider m-0 p-0 bg-base-100 px-4" />
+    <div class="py-2 px-2 my-2 rounded">
       <PriceAverageChart :prive-average-timseries="priceAverageTimeseries" />
     </div>
   </div>
