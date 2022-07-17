@@ -1,12 +1,14 @@
 <template>
   <div>
-    <div
-      class="text-center py-16 bg-base-300 bg-contain bg-center"
-    >
-      <h1 class="text-4xl">
-        Lafted
-      </h1>
-      <p class="text-l">
+    <div class="text-center py-8 bg-base-300">
+      <p>
+        <img
+          src="logo_transparent.png"
+          alt=""
+          class="w-2/3 mr-auto ml-auto p-4"
+        >
+      </p>
+      <p class="text-l px-2">
         A simple, dashboard for consuming information about the Irish rental market.
       </p>
     </div>
