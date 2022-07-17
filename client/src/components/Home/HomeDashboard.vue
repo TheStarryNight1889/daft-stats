@@ -19,7 +19,7 @@
           />
         </h1>
         <p class="text-accent text-xs">
-          {{ averageDifferencePercentage }}%
+          {{ differencePercentage('price_average') }}%
           {{ isTrendUp('price_average') ? 'higher' : 'lower' }}
           than yesterday
         </p>
@@ -43,7 +43,7 @@
           />
         </h1>
         <p class="text-accent text-xs">
-          {{ lowestDifferencePercentage }}%
+          {{ differencePercentage('price_low') }}%
           {{ isTrendUp('price_low') ? 'higher' : 'lower' }}
           than yesterday
         </p>
@@ -66,7 +66,7 @@
           />
         </h1>
         <p class="text-accent text-xs">
-          {{ highestDifferencePercentage }}%
+          {{ differencePercentage('price_high') }}%
           {{ isTrendUp('price_high') ? 'higher' : 'lower' }}
           than yesterday
         </p>
@@ -89,7 +89,7 @@
           />
         </h1>
         <p class="text-accent text-xs">
-          {{ propertiesAddedDifferencePercentage }}%
+          {{ differencePercentage('properties_added') }}%
           {{ isTrendUp('properties_added') ? 'higher' : 'lower' }}
           than yesterday
         </p>
@@ -139,22 +139,6 @@ export default {
     propertiesAdded() {
       return this.statsStore.propertiesAddedCurrent;
     },
-    averageDifferencePercentage() {
-      const diff = this.statsStore.averageDifferencePercentage;
-      return (diff * 100).toFixed(2);
-    },
-    lowestDifferencePercentage() {
-      const diff = this.statsStore.lowestDifferencePercentage;
-      return (diff * 100).toFixed(2);
-    },
-    highestDifferencePercentage() {
-      const diff = this.statsStore.highestDifferencePercentage;
-      return (diff * 100).toFixed(2);
-    },
-    propertiesAddedDifferencePercentage() {
-      const diff = this.statsStore.propertiesAddedDifferencePercentage;
-      return (diff * 100).toFixed(2);
-    },
     priceAverageTimeseries() {
       return this.statsStore.priceAverageTimeseries;
     },
@@ -162,6 +146,10 @@ export default {
   methods: {
     isTrendUp(datapoint) {
       return this.statsStore.isTrendUp(datapoint);
+    },
+    differencePercentage(datapoint) {
+      const diff = this.statsStore.differencePercentage(datapoint);
+      return (diff * 100).toFixed(2);
     },
   },
 };
