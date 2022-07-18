@@ -4,154 +4,30 @@
       <h1 class=" col-span-2 text-xl font-bold">
         Quick Stats
       </h1>
-      <div class="my-2">
-        <h1 class="text-xl">
-          Average Rent
-          <font-awesome-icon
-            v-if="differencePercentage('price_average') == 0.00"
-            class="text-blue-400"
-            icon="fa-solid fa-arrow-right-long"
-          />
-          <font-awesome-icon
-            v-else-if="isTrendUp('price_average')"
-            class="text-green-400"
-            icon="fa-solid fa-arrow-trend-up"
-          />
-          <font-awesome-icon
-            v-else-if="!isTrendUp('price_average')"
-            class="text-red-400"
-            icon="fa-solid fa-arrow-trend-down"
-          />
-        </h1>
-        <p
-          v-if="differencePercentage('price_average') != 0.00"
-          class="text-accent text-xs"
-        >
-          {{ differencePercentage('price_average') }}%
-          {{ isTrendUp('price_average') ? 'higher' : 'lower' }}
-          than yesterday
-        </p>
-        <p
-          v-else
-          class="text-accent text-xs"
-        >
-          No change since yesterday
-        </p>
-        <p>
-          €{{ averagePrice }}  per dwelling
-        </p>
-      </div>
-      <div class="my-2">
-        <h1 class="text-xl">
-          Lowest Rent
-          <font-awesome-icon
-            v-if="differencePercentage('price_low') == 0.00"
-            class="text-blue-400"
-            icon="fa-solid fa-arrow-right-long"
-          />
-          <font-awesome-icon
-            v-else-if="isTrendUp('price_low')"
-            class="text-green-400"
-            icon="fa-solid fa-arrow-trend-up"
-          />
-          <font-awesome-icon
-            v-else-if="!isTrendUp('price_low')"
-            class="text-red-400"
-            icon="fa-solid fa-arrow-trend-down"
-          />
-        </h1>
-        <p
-          v-if="differencePercentage('price_low') != 0.00"
-          class="text-accent text-xs"
-        >
-          {{ differencePercentage('price_low') }}%
-          {{ isTrendUp('price_low') ? 'higher' : 'lower' }}
-          than yesterday
-        </p>
-        <p
-          v-else
-          class="text-accent text-xs"
-        >
-          No change since yesterday
-        </p>
-        <p>
-          €{{ lowestPrice }}
-        </p>
-      </div>
-      <div class="my-2">
-        <h1 class="text-xl">
-          Highest Rent
-          <font-awesome-icon
-            v-if="differencePercentage('price_high') == 0.00"
-            class="text-blue-400"
-            icon="fa-solid fa-arrow-right-long"
-          />
-          <font-awesome-icon
-            v-else-if="isTrendUp('price_high')"
-            class="text-green-400"
-            icon="fa-solid fa-arrow-trend-up"
-          />
-          <font-awesome-icon
-            v-else-if="!isTrendUp('price_high')"
-            class="text-red-400"
-            icon="fa-solid fa-arrow-trend-down"
-          />
-        </h1>
-        <p
-          v-if="differencePercentage('price_high') != 0.00"
-          class="text-accent text-xs"
-        >
-          {{ differencePercentage('price_high') }}%
-          {{ isTrendUp('price_high') ? 'higher' : 'lower' }}
-          than yesterday
-        </p>
-        <p
-          v-else
-          class="text-accent text-xs"
-        >
-          No change since yesterday
-        </p>
-        <p>
-          €{{ highestPrice }}
-        </p>
-      </div>
-      <div class="my-2">
-        <h1 class="text-xl">
-          New Rentals
-          <font-awesome-icon
-            v-if="differencePercentage('properties_added') == 0.00"
-            class="text-blue-400"
-            icon="fa-solid fa-arrow-right-long"
-          />
-          <font-awesome-icon
-            v-else-if="isTrendUp('properties_added')"
-            class="text-green-400"
-            icon="fa-solid fa-arrow-trend-up"
-          />
-          <font-awesome-icon
-            v-else-if="!isTrendUp('properties_added')"
-            class="text-red-400"
-            icon="fa-solid fa-arrow-trend-down"
-          />
-        </h1>
-        <p
-          v-if="differencePercentage('properties_added') != 0.00"
-          class="text-accent text-xs"
-        >
-          {{ differencePercentage('properties_added') }}%
-          {{ isTrendUp('properties_added') ? 'higher' : 'lower' }}
-          than yesterday
-        </p>
-        <p
-          v-else
-          class="text-accent text-xs"
-        >
-          No change since yesterday
-        </p>
-        <p>
-          {{ propertiesAdded }}
-        </p>
-      </div>
+      <quick-stat
+        :title="'Average Rent'"
+        :trend-up="isTrendUp('price_average')"
+        :difference-percentage="differencePercentage('price_average')"
+        :value="'€'+averagePrice"
+      />
+      <quick-stat
+        :title="'Lowest Rent'"
+        :trend-up="isTrendUp('price_low')"
+        :difference-percentage="differencePercentage('price_low')"
+        :value="'€'+lowestPrice"
+      />
+      <quick-stat
+        :title="'Highest Rent'"
+        :trend-up="isTrendUp('price_high')"
+        :difference-percentage="differencePercentage('price_high')"
+        :value="'€'+highestPrice"
+      />
+      <quick-stat
+        :title="'New Rentals'"
+        :trend-up="isTrendUp('properties_added')"
+        :difference-percentage="differencePercentage('properties_added')"
+        :value="propertiesAdded"
+      />
     </div>
     <div class="py-2 px-2 my-2 rounded">
       <PriceDistributionChart :price-distribution="priceDistribution" />
@@ -196,10 +72,11 @@
 import useStats from '../../stores/useStats';
 import PriceDistributionChart from './PriceDistributionChart.vue';
 import TimeSeriesChart from './TimeSeriesChart.vue';
+import QuickStat from './QuickStat.vue';
 
 export default {
   name: 'HomeDashboard',
-  components: { PriceDistributionChart, TimeSeriesChart },
+  components: { PriceDistributionChart, TimeSeriesChart, QuickStat },
   async setup() {
     const statsStore = useStats();
     await statsStore.FetchAllStats();
