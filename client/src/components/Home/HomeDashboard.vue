@@ -110,13 +110,13 @@
         >
           Price Average
         </option>
-        <option @click="updateTimeseriesKey('price_high')">
+        <option @click.capture="updateTimeseriesKey('price_high')">
           Price High
         </option>
-        <option @click="updateTimeseriesKey('price_low')">
+        <option @click.capture="updateTimeseriesKey('price_low')">
           Price Low
         </option>
-        <option @click="updateTimeseriesKey('properties_added')">
+        <option @click.capture="updateTimeseriesKey('properties_added')">
           Properties Added
         </option>
       </select>
@@ -185,7 +185,6 @@ export default {
       this.timeseries();
     },
     timeseries() {
-      console.log(this.statsStore.timeseries(this.timeseriesKey));
       this.timeseriesData[0].data = this.statsStore.timeseries(this.timeseriesKey);
     },
   },
