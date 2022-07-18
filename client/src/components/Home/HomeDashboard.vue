@@ -8,7 +8,7 @@
         <h1 class="text-xl">
           Average Rent
           <font-awesome-icon
-            v-if="differencePercentage('pice_average') == 0.00"
+            v-if="differencePercentage('price_average') == 0.00"
             class="text-blue-400"
             icon="fa-solid fa-arrow-right-long"
           />
@@ -23,12 +23,20 @@
             icon="fa-solid fa-arrow-trend-down"
           />
         </h1>
-        <p class="text-accent text-xs">
+        <p
+          v-if="differencePercentage('price_average') != 0.00"
+          class="text-accent text-xs"
+        >
           {{ differencePercentage('price_average') }}%
           {{ isTrendUp('price_average') ? 'higher' : 'lower' }}
           than yesterday
         </p>
-
+        <p
+          v-else
+          class="text-accent text-xs"
+        >
+          No change since yesterday
+        </p>
         <p>
           €{{ averagePrice }}  per dwelling
         </p>
@@ -52,10 +60,19 @@
             icon="fa-solid fa-arrow-trend-down"
           />
         </h1>
-        <p class="text-accent text-xs">
+        <p
+          v-if="differencePercentage('price_low') != 0.00"
+          class="text-accent text-xs"
+        >
           {{ differencePercentage('price_low') }}%
           {{ isTrendUp('price_low') ? 'higher' : 'lower' }}
           than yesterday
+        </p>
+        <p
+          v-else
+          class="text-accent text-xs"
+        >
+          No change since yesterday
         </p>
         <p>
           €{{ lowestPrice }}
@@ -80,10 +97,19 @@
             icon="fa-solid fa-arrow-trend-down"
           />
         </h1>
-        <p class="text-accent text-xs">
+        <p
+          v-if="differencePercentage('price_high') != 0.00"
+          class="text-accent text-xs"
+        >
           {{ differencePercentage('price_high') }}%
           {{ isTrendUp('price_high') ? 'higher' : 'lower' }}
           than yesterday
+        </p>
+        <p
+          v-else
+          class="text-accent text-xs"
+        >
+          No change since yesterday
         </p>
         <p>
           €{{ highestPrice }}
@@ -108,10 +134,19 @@
             icon="fa-solid fa-arrow-trend-down"
           />
         </h1>
-        <p class="text-accent text-xs">
+        <p
+          v-if="differencePercentage('properties_added') != 0.00"
+          class="text-accent text-xs"
+        >
           {{ differencePercentage('properties_added') }}%
           {{ isTrendUp('properties_added') ? 'higher' : 'lower' }}
           than yesterday
+        </p>
+        <p
+          v-else
+          class="text-accent text-xs"
+        >
+          No change since yesterday
         </p>
         <p>
           {{ propertiesAdded }}
