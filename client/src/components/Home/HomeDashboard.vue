@@ -103,20 +103,29 @@
     </div>
     <div class="divider m-0 p-0 bg-base-100 px-4" />
     <div class="py-2 px-2 my-2 rounded text-right">
-      <select class="select select-bordered select-sm max-w-xs mb-4">
+      <select
+        class="select select-bordered select-sm max-w-xs mb-4"
+        @change="updateTimeseriesKey($event)"
+      >
         <option
           selected
-          @click="updateTimeseriesKey('price_average')"
+          value="price_average"
         >
           Price Average
         </option>
-        <option @click.capture="updateTimeseriesKey('price_high')">
+        <option
+          value="price_high"
+        >
           Price High
         </option>
-        <option @click.capture="updateTimeseriesKey('price_low')">
+        <option
+          value="price_low"
+        >
           Price Low
         </option>
-        <option @click.capture="updateTimeseriesKey('properties_added')">
+        <option
+          value="properties_added"
+        >
           Properties Added
         </option>
       </select>
@@ -181,7 +190,7 @@ export default {
       return (diff * 100).toFixed(2);
     },
     updateTimeseriesKey(datapoint) {
-      this.timeseriesKey = datapoint;
+      this.timeseriesKey = datapoint.target.value;
       this.timeseries();
     },
     timeseries() {
