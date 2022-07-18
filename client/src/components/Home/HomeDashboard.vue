@@ -8,12 +8,17 @@
         <h1 class="text-xl">
           Average Rent
           <font-awesome-icon
-            v-if="isTrendUp('price_average')"
+            v-if="differencePercentage('pice_average') == 0.00"
+            class="text-blue-400"
+            icon="fa-solid fa-arrow-right-long"
+          />
+          <font-awesome-icon
+            v-else-if="isTrendUp('price_average')"
             class="text-green-400"
             icon="fa-solid fa-arrow-trend-up"
           />
           <font-awesome-icon
-            v-if="!isTrendUp('price_average')"
+            v-else-if="!isTrendUp('price_average')"
             class="text-red-400"
             icon="fa-solid fa-arrow-trend-down"
           />
@@ -32,12 +37,17 @@
         <h1 class="text-xl">
           Lowest Rent
           <font-awesome-icon
-            v-if="isTrendUp('price_low')"
+            v-if="differencePercentage('price_low') == 0.00"
+            class="text-blue-400"
+            icon="fa-solid fa-arrow-right-long"
+          />
+          <font-awesome-icon
+            v-else-if="isTrendUp('price_low')"
             class="text-green-400"
             icon="fa-solid fa-arrow-trend-up"
           />
           <font-awesome-icon
-            v-if="!isTrendUp('price_low')"
+            v-else-if="!isTrendUp('price_low')"
             class="text-red-400"
             icon="fa-solid fa-arrow-trend-down"
           />
@@ -55,12 +65,17 @@
         <h1 class="text-xl">
           Highest Rent
           <font-awesome-icon
-            v-if="isTrendUp('price_high')"
+            v-if="differencePercentage('price_high') == 0.00"
+            class="text-blue-400"
+            icon="fa-solid fa-arrow-right-long"
+          />
+          <font-awesome-icon
+            v-else-if="isTrendUp('price_high')"
             class="text-green-400"
             icon="fa-solid fa-arrow-trend-up"
           />
           <font-awesome-icon
-            v-if="!isTrendUp('price_high')"
+            v-else-if="!isTrendUp('price_high')"
             class="text-red-400"
             icon="fa-solid fa-arrow-trend-down"
           />
@@ -78,12 +93,17 @@
         <h1 class="text-xl">
           New Rentals
           <font-awesome-icon
-            v-if="isTrendUp('properties_added')"
+            v-if="differencePercentage('properties_added') == 0.00"
+            class="text-blue-400"
+            icon="fa-solid fa-arrow-right-long"
+          />
+          <font-awesome-icon
+            v-else-if="isTrendUp('properties_added')"
             class="text-green-400"
             icon="fa-solid fa-arrow-trend-up"
           />
           <font-awesome-icon
-            v-if="!isTrendUp('properties_added')"
+            v-else-if="!isTrendUp('properties_added')"
             class="text-red-400"
             icon="fa-solid fa-arrow-trend-down"
           />
