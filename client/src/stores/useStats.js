@@ -27,19 +27,17 @@ const useStats = defineStore('stats', {
       const secondLast = state.stats[state.stats.length - 2];
       return (last[datapoint] - secondLast[datapoint]) / last[datapoint];
     },
-
-    priceAverageTimeseries: (state) => {
+    timeseries: (state) => (datapoint) => {
       // return an object of the form [{x:, y:}, {x:, y:}];
       const timeseries = [];
       state.stats.forEach((stat) => {
         timeseries.push({
           x: new Date(stat.timestamp.split('.')[0].replace(/-/g, '/')),
-          y: stat.price_average,
+          y: stat[datapoint],
         });
       });
       return timeseries;
     },
-
   },
 
   actions: {

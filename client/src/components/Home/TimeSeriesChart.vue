@@ -1,15 +1,11 @@
 <template>
-  <div class="text-right">
-    <select class="select select-bordered select-sm max-w-xs mb-4">
-      <option selected>
-        Rent Average
-      </option>
-      <option>Properties Added</option>
-    </select>
+  <div>
     <apexchart
+      ref="realtimeChart"
       type="area"
       :options="chartOptions"
-      :series="series"
+      :series="timeSeriesData"
+      :title="{text: timeseriesKey, align: 'left'}"
     />
   </div>
 </template>
@@ -17,19 +13,19 @@
 <script>
 
 export default {
-  name: 'PriceAverageChart',
+  name: 'TimeSeriesChart',
   props: {
-    priveAverageTimseries: {
+    timeSeriesData: {
       type: Object,
+      required: true,
+    },
+    timeseriesKey: {
+      type: String,
       required: true,
     },
   },
   data() {
     return {
-      series: [{
-        name: 'Average Price',
-        data: this.priveAverageTimseries,
-      }],
       chartOptions: {
         chart: {
           type: 'line',
@@ -54,7 +50,7 @@ export default {
           size: 0,
         },
         title: {
-          text: 'Rent Average (Timeseries)',
+          text: `${this.timeseriesKey} (Timeseries)`,
           align: 'left',
         },
         fill: {
@@ -70,6 +66,7 @@ export default {
         yaxis: {
           labels: {
             formatter(val) {
+              // if timeseriesKey contains 'price'
               return `€${(val).toFixed(0)}`;
             },
           },
