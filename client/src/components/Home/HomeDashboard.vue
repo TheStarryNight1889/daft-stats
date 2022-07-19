@@ -8,25 +8,25 @@
         :title="'Average Rent'"
         :trend-up="isTrendUp('price_average')"
         :difference-percentage="differencePercentage('price_average')"
-        :value="'€'+averagePrice"
+        :value="`€${averagePrice}`"
       />
       <quick-stat
         :title="'Lowest Rent'"
         :trend-up="isTrendUp('price_low')"
         :difference-percentage="differencePercentage('price_low')"
-        :value="'€'+lowestPrice"
+        :value="`€${lowestPrice}`"
       />
       <quick-stat
         :title="'Highest Rent'"
         :trend-up="isTrendUp('price_high')"
         :difference-percentage="differencePercentage('price_high')"
-        :value="'€'+highestPrice"
+        :value="`€${highestPrice}`"
       />
       <quick-stat
         :title="'New Rentals'"
         :trend-up="isTrendUp('properties_added')"
         :difference-percentage="differencePercentage('properties_added')"
-        :value="propertiesAdded"
+        :value="`${propertiesAdded}`"
       />
     </div>
     <div class="py-2 px-2 my-2 rounded">
@@ -44,19 +44,13 @@
         >
           Price Average
         </option>
-        <option
-          value="price_high"
-        >
+        <option value="price_high">
           Price High
         </option>
-        <option
-          value="price_low"
-        >
+        <option value="price_low">
           Price Low
         </option>
-        <option
-          value="properties_added"
-        >
+        <option value="properties_added">
           Properties Added
         </option>
       </select>

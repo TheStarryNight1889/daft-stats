@@ -1,11 +1,10 @@
 <template>
   <div>
     <apexchart
-      ref="realtimeChart"
+      ref="timeseriesChart"
       type="area"
       :options="chartOptions"
       :series="timeSeriesData"
-      :title="{text: timeseriesKey, align: 'left'}"
     />
   </div>
 </template>
@@ -26,6 +25,12 @@ export default {
   },
   data() {
     return {
+      keyMap: {
+        price_average: 'Average Price',
+        price_low: 'Lowest Price',
+        price_high: 'Highest Price',
+        properties_added: 'Properties Added',
+      },
       chartOptions: {
         chart: {
           type: 'line',
@@ -50,7 +55,7 @@ export default {
           size: 0,
         },
         title: {
-          text: `${this.timeseriesKey} (Timeseries)`,
+          text: 'Average Price (Timeseries)',
           align: 'left',
         },
         fill: {
@@ -66,7 +71,6 @@ export default {
         yaxis: {
           labels: {
             formatter(val) {
-              // if timeseriesKey contains 'price'
               return `€${(val).toFixed(0)}`;
             },
           },
@@ -84,6 +88,25 @@ export default {
         },
       },
     };
+  },
+  computed: {
+    getTitle() {
+      return this.keyMap[this.timeseriesKey];
+    },
+  },
+  watch: {
+    timeseriesKey() {
+      this.updateOptions();
+    },
+  },
+  methods: {
+    updateOptions() {
+      this.$refs.timeseriesChart.updateOptions({
+        title: {
+          text: `${this.getTitle} (Timeseries)`,
+        },
+      });
+    },
   },
 };
 </script>
