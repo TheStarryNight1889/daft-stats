@@ -3,14 +3,13 @@ package db
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func Connect() *mongo.Database {
-	mongostring := os.Getenv("MONGO_URI")
+	mongostring := "" //os.Getenv("MONGO_URI")
 	if mongostring == "" {
 		mongostring = "mongodb://root:example@127.0.0.1/"
 	}

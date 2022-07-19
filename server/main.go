@@ -9,6 +9,7 @@ import (
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/handler/transport"
+	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/go-chi/chi"
 	"github.com/go-co-op/gocron"
 	"github.com/gorilla/websocket"
@@ -49,11 +50,15 @@ func main() {
 		},
 	})
 
-	// router.Handle("/", playground.Handler("GraphQL playground", "/query"))
-	// router.Handle("/query", srv)
+	router.Handle("/", playground.Handler("GraphQL playground", "/query"))
+	router.Handle("/query", srv)
 
-	// err := http.ListenAndServe(":"+port, router)
-	// if err != nil {
-	// 	panic(err)
-	// }
+	err := http.ListenAndServe(":"+port, router)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func jobRunner() {
+	// todo
 }
