@@ -3,14 +3,12 @@ package main
 import (
 	"daft-stats/graph"
 	"daft-stats/graph/generated"
-	"daft-stats/jobs"
 	"net/http"
 	"os"
 	"time"
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/handler/transport"
-	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/go-chi/chi"
 	"github.com/go-co-op/gocron"
 	"github.com/gorilla/websocket"
@@ -22,9 +20,9 @@ const defaultPort = "3000"
 func main() {
 	cron := gocron.NewScheduler(time.UTC)
 	cron.Every(1).Day().At("00:01").Do(func() {
-		jobs.GetProperties()
+		// jobs.GetProperties()
 	})
-	cron.StartAsync()
+	// cron.StartAsync()
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = defaultPort
@@ -51,15 +49,11 @@ func main() {
 		},
 	})
 
-	router.Handle("/", playground.Handler("GraphQL playground", "/query"))
-	router.Handle("/query", srv)
+	// router.Handle("/", playground.Handler("GraphQL playground", "/query"))
+	// router.Handle("/query", srv)
 
-	err := http.ListenAndServe(":"+port, router)
-	if err != nil {
-		panic(err)
-	}
-}
-
-func jobRunner() {
-	// todo
+	// err := http.ListenAndServe(":"+port, router)
+	// if err != nil {
+	// 	panic(err)
+	// }
 }
