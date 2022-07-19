@@ -101,10 +101,39 @@ export default {
   },
   methods: {
     updateOptions() {
+      let yaxisOptions = {};
+      if (this.timeseriesKey !== 'properties_added') {
+        yaxisOptions = {
+          yaxis: {
+            labels: {
+              formatter(val) {
+                return `€${(val).toFixed(0)}`;
+              },
+            },
+            title: {
+              text: 'Price',
+            },
+          },
+        };
+      } else {
+        yaxisOptions = {
+          yaxis: {
+            labels: {
+              formatter(val) {
+                return `${(val).toFixed(0)}`;
+              },
+            },
+            title: {
+              text: 'Properties Added',
+            },
+          },
+        };
+      }
       this.$refs.timeseriesChart.updateOptions({
         title: {
           text: `${this.getTitle} (Timeseries)`,
         },
+        ...yaxisOptions,
       });
     },
   },

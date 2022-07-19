@@ -80,6 +80,12 @@ export default {
   },
   data() {
     return {
+      keyMap: {
+        price_average: 'Average Price',
+        price_low: 'Lowest Price',
+        price_high: 'Highest Price',
+        properties_added: 'Properties Added',
+      },
       timeseriesKey: 'price_average',
       timeseriesData: [{
         name: 'Average Price',
@@ -117,6 +123,7 @@ export default {
     },
     updateTimeseriesKey(datapoint) {
       this.timeseriesKey = datapoint.target.value;
+      this.timeseriesData[0].name = this.keyMap[this.timeseriesKey];
       this.timeseries();
     },
     timeseries() {
