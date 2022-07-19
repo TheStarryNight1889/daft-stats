@@ -51,11 +51,11 @@ export default {
       required: true,
     },
     differencePercentage: {
-      type: Number,
+      type: String,
       required: true,
     },
     value: {
-      type: Number,
+      type: String,
       required: true,
     },
   },
