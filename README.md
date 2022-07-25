@@ -1,5 +1,7 @@
 # Daft Stats
 
+## THIS PROJECT HAS BEEN TAKEN OFFLINE
+
 ## What is Daft Stats?
 DaftStats is a web application containing a dashboard which displays statistics and data visualizations from rental properties on [daft.ie](wwww.daft.ie). 
 
